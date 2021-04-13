@@ -1,0 +1,110 @@
+# depslib dependency file v1.0
+1618274706 source:d:\mrsu\qg\中期考核\图书管理系统\main.c
+	<stdio.h>
+	<string.h>
+	<stdlib.h>
+	"Librarymanagementsystem.h"
+
+1618227725 source:d:\mrsu\qg\中期考核\图书管理系统\menu.c
+	<stdio.h>
+	<string.h>
+	<stdlib.h>
+	"Librarymanagementsystem.h"
+
+1618297564 source:d:\mrsu\qg\中期考核\图书管理系统\select.c
+	<stdio.h>
+	<string.h>
+	<stdlib.h>
+	"Librarymanagementsystem.h"
+
+1618239731 source:d:\mrsu\qg\中期考核\图书管理系统\authority.c
+	<stdio.h>
+	<string.h>
+	<stdlib.h>
+	"Librarymanagementsystem.h"
+
+1618284750 d:\mrsu\qg\中期考核\图书管理系统\librarymanagementsystem.h
+	"Librarymanagementsystem.h"
+
+1618295496 source:d:\mrsu\qg\中期考核\图书管理系统\adfunction.c
+	<stdio.h>
+	<string.h>
+	<stdlib.h>
+	"Librarymanagementsystem.h"
+
+1618228338 source:d:\mrsu\qg\zhonqikaohe\library manenege system\adfunction.c
+	<stdio.h>
+	<string.h>
+	<stdlib.h>
+	"Librarymanagementsystem.h"
+
+1618228172 d:\mrsu\qg\zhonqikaohe\library manenege system\librarymanagementsystem.h
+
+1618213209 source:d:\mrsu\qg\zhonqikaohe\library manenege system\authority.c
+	<stdio.h>
+	<string.h>
+	<stdlib.h>
+	"Librarymanagementsystem.h"
+
+1618228259 source:d:\mrsu\qg\zhonqikaohe\library manenege system\main.c
+	<stdio.h>
+	<string.h>
+	<stdlib.h>
+	"Librarymanagementsystem.h"
+
+1618227725 source:d:\mrsu\qg\zhonqikaohe\library manenege system\menu.c
+	<stdio.h>
+	<string.h>
+	<stdlib.h>
+	"Librarymanagementsystem.h"
+
+1618227595 source:d:\mrsu\qg\zhonqikaohe\library manenege system\select.c
+	<stdio.h>
+	<string.h>
+	<stdlib.h>
+	"Librarymanagementsystem.h"
+
+1618228338 source:c:\users\30516\desktop\library manenege system\adfunction.c
+	<stdio.h>
+	<string.h>
+	<stdlib.h>
+	"Librarymanagementsystem.h"
+
+1618229860 c:\users\30516\desktop\library manenege system\librarymanagementsystem.h
+
+1618229144 source:c:\users\30516\desktop\library manenege system\main.c
+	<stdio.h>
+	<string.h>
+	<stdlib.h>
+	"Librarymanagementsystem.h"
+
+1618227725 source:c:\users\30516\desktop\library manenege system\menu.c
+	<stdio.h>
+	<string.h>
+	<stdlib.h>
+	"Librarymanagementsystem.h"
+
+1618227595 source:c:\users\30516\desktop\library manenege system\select.c
+	<stdio.h>
+	<string.h>
+	<stdlib.h>
+	"Librarymanagementsystem.h"
+
+1618229003 source:c:\users\30516\desktop\library manenege system\authority.c
+	<stdio.h>
+	<string.h>
+	<stdlib.h>
+	"Librarymanagementsystem.h"
+
+1618297529 source:d:\mrsu\qg\中期考核\图书管理系统\userfunction.c
+	<stdio.h>
+	<string.h>
+	<stdlib.h>
+	"Librarymanagementsystem.h"
+
+1618287408 source:d:\mrsu\qg\中期考核\图书管理系统\linklist.c
+	<stdio.h>
+	<string.h>
+	<stdlib.h>
+	"Librarymanagementsystem.h"
+
