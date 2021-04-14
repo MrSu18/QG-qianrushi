@@ -126,6 +126,7 @@ Status UComparePassword (char *user,char *password)//ÓÃÓÚÉóºËÃÜÂë
 	while(!feof(fp))
 	{
 		fscanf(fp,"%s %s",s[N].username,s[N].password);
+		//printf("%s %s",s[N].username,s[N].password);
 		if(strcmp(user,s[N].username)==0&&strcmp(password,s[N].password)==0)
 		{
 			return SUCCESS;

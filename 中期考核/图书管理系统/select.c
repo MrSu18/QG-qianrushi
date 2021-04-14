@@ -102,6 +102,24 @@ void Userselect()
 		}
 		switch(opotion)
 		{
+		case 1:
+		{
+			DLink head;
+			head=InitiDL();
+			lendbook(head);
+			Usermenu();
+			Userselect();
+			break;
+		}
+		case 2:
+		{
+			DLink head;
+			head=InitiDL();
+			returnbook(head);
+			Usermenu();
+			Userselect();
+			break;
+		}
 		case 3:
 			searchbook();
 			system("pause");
@@ -109,6 +127,8 @@ void Userselect()
 		case 4:
 			readbook();
 			system("pause");
+			Usermenu();
+			Userselect();
 			break;
 		default:
 			printf("非法输入，请重新输入!\n");

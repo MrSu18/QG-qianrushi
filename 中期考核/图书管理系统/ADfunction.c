@@ -97,14 +97,6 @@ void deletebook(DLink head)
 		else
 		{
 			DLink newbook=(DLink)malloc(sizeof(LNode));
-			//if(n==1)
-			//{
-				//head->date.num=temp[i].num;
-				//strcpy(head->date.bookname,temp[i].bookname);
-				//strcpy(head->date.author,temp[i].author);
-				//head->date.booknum=temp[i].booknum;
-			//}
-
 			 if(newbook!=NULL)
 			{
 				DLink newbook=(DLink)malloc(sizeof(LNode));
@@ -114,10 +106,6 @@ void deletebook(DLink head)
 				strcpy(newbook->date.author,temp[i].author);
 				newbook->date.booknum=temp[i].booknum;
 				//½«Á´±í²åÈë
-				//newbook->next=head->next;
-				//newbook->prev=head;
-				//head->next=newbook;
-				//newbook->next->prev=newbook;
 				p->next=newbook;
 				p=newbook;
 				newbook->next=NULL;
@@ -140,7 +128,6 @@ void deletebook(DLink head)
 		return ERROR;
 	}
 	DLink shu=head->next;
-	//DLink shu = head->next;
 	while(shu!=NULL)
 	{
 		fwrite(&(shu->date),sizeof(Book),1,fp);

@@ -2,7 +2,8 @@
 #include<string.h>
 #include<stdlib.h>
 #include"Librarymanagementsystem.h"
-
+//**************************************************
+//Í¼Êé
 DLink InitiDL()
 {
 	DLink head = (DLink)malloc(sizeof(LNode));
@@ -15,7 +16,6 @@ DLink InitiDL()
 	}
 	return head;
 }
-
 void traval(DLink head)
 {
 	//int test=0;
@@ -39,4 +39,15 @@ void traval(DLink head)
 	}
 	//printf("%d",test);
 }
-
+//************************************************
+//Ñ§Éú
+pStudent Initi()
+{
+	pStudent head1 = (pStudent)malloc(sizeof(Student));
+	if(head1)
+	{
+		head1->next=head1;
+		head1->prev=head1;
+	}
+	return head1;
+}

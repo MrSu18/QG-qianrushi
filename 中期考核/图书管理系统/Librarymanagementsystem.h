@@ -16,22 +16,34 @@ typedef struct LoginC//登录账号密码
 	char username[30];
 	char password[30];
 }LoginC;
-
-typedef struct book
+//图书
+typedef struct book//图书结构体
 {
 	int num;
 	char bookname[20];
 	char author[20];
 	int booknum;
 }Book;
-
-typedef struct LNode
+typedef struct LNode//图书链表结点
 {
 	struct LNode*prev;
 	count data;
 	struct book date;
 	struct LNode*next;
 }LNode,*DLink;
+//学生，用户，用来存储用户信息
+typedef struct yonhu
+{
+	char CLASS[30];
+	char ID[20];
+	char stuname[10];
+}yonhu;
+typedef struct stu
+{
+	struct stu *prev;
+	struct yonhu shuju;
+	struct stu *next;
+}Student,*pStudent;
 
 typedef Book ElemType;
 
@@ -64,11 +76,13 @@ void deletebook(DLink head);
 //用户功能模块函数
 Status readbook();
 void searchbook();
-
+void lendbook(DLink head);
+void returnbook(DLink head);
 
 //***************************************
 //链表使用基本函数
 DLink InitiDL();
 void traval(DLink head);
+pStudent Initi();
 //****************************************
 #endif // LIBRARYMANAGEMENTSYSTEM_H_INCLUDED
