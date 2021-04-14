@@ -18,6 +18,8 @@ void identityselect()
 				system("cls");
 				char user[30],password[30];
 				ADLogin(user,password);
+				system("cls");
+				Administratormenu();
 				Administratorselect();
 				break;
 			}
@@ -26,6 +28,7 @@ void identityselect()
 				system("cls");
 				char user[30],password[30];
 				ULogin(user,password);
+				system("cls");
 				Usermenu();
 				Userselect();
 				break;
@@ -53,15 +56,16 @@ void Administratorselect()//管理者选项
 	int opotion;
 	//while (1)
 	{
-		printf("\t你的选项为：");
+		printf("\t\t\t\t你的选项为：");
 			while(scanf("%d",&opotion)==0||getchar()!='\n')
 			{
-				printf("\t输入了非法字符，请重新输入：");
+				printf("\t\t\t\t输入了非法字符，请重新输入：");
 				while (getchar() != '\n');
 			}
 			switch(opotion)
 			{
 			case 1:
+				system("cls");
 				addbook();
 				system("cls");
 				Administratormenu();
@@ -69,17 +73,22 @@ void Administratorselect()//管理者选项
 				break;
 			case 2:
 			{
+				system("cls");
 				DLink head;
 				head=InitiDL();
 				//traval(head);
 				deletebook(head);
+				system("cls");
+				Administratormenu();
+				Administratorselect();
 				break;
-
 			}
 			case 0:
-				exit(0);
+				system("cls");
+				identitymenu();
+				identityselect();
 			default:
-				printf("非法输入，请重新输入!\n");
+				printf("\t\t\t\t非法输入，请重新输入!\n");
 				system("pause");
 				system("cls");
 				Administratormenu();
@@ -94,44 +103,55 @@ void Administratorselect()//管理者选项
 void Userselect()
 {
 	int opotion;
-	printf("\t你的选项为：");
+	printf("\t\t\t\t你的选项为：");
 		while(scanf("%d",&opotion)==0||getchar()!='\n')
 		{
-			printf("\t输入了非法字符，请重新输入：");
+			printf("\t\t\t\t输入了非法字符，请重新输入：");
 			while (getchar() != '\n');
 		}
 		switch(opotion)
 		{
 		case 1:
 		{
+			system("cls");
 			DLink head;
 			head=InitiDL();
 			lendbook(head);
+			system("cls");
 			Usermenu();
 			Userselect();
 			break;
 		}
 		case 2:
 		{
+			system("cls");
 			DLink head;
 			head=InitiDL();
 			returnbook(head);
+			system("cls");
 			Usermenu();
 			Userselect();
 			break;
 		}
 		case 3:
+			system("cls");
 			searchbook();
 			system("pause");
 			break;
 		case 4:
+			system("cls");
 			readbook();
 			system("pause");
 			Usermenu();
 			Userselect();
 			break;
+		case 0:
+			system("cls");
+			identitymenu();
+			identityselect();
+			break;
 		default:
-			printf("非法输入，请重新输入!\n");
+			printf("\t\t\t\t非法输入，请重新输入!\n");
 			system("pause");
 			system("cls");
 			Usermenu();

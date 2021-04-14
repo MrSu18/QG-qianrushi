@@ -60,8 +60,8 @@ void Userselect();
 //***************************************
 //登录模块函数
 Status ADComparePassword (char *user,char *password);
-void ADLogin (char user[30],char password[30]);
-void ULogin(char user[30],char password[30]);
+Status ADLogin (char user[30],char password[30]);
+Status ULogin(char user[30],char password[30]);
 Status UComparePassword (char *user,char *password);
 //***************************************
 
@@ -77,7 +77,7 @@ void deletebook(DLink head);
 Status readbook();
 void searchbook();
 void lendbook(DLink head);
-void returnbook(DLink head);
+Status returnbook(DLink head);
 
 //***************************************
 //链表使用基本函数

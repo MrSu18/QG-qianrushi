@@ -60,15 +60,7 @@ void searchbook()//搜索图书
 		if(strcmp(temp[i].bookname,lookupbook)==0||strcmp(temp[i].author,lookupbook)==0)
 		{
 			printf("%d\t%s\t%s\t%d\t\n",temp[i].num,temp[i].bookname,temp[i].author,temp[i].booknum);
-			//printf("%d\t%s\t%s\t%d\t\n",num,bookname,author,kucunnum);
-			//return SUCCESS;
-			//break;
 		}
-		//else
-		//{
-			//printf("请稍等\n");
-			//return ERROR;
-		//}
 		i++;n++;
 	}
 	if(n==0)
@@ -136,7 +128,7 @@ void lendbook(DLink head)
 			}
 		}
 	}
-	//printf("test");
+
 	int flag;//用来记录用户是否存在
 	pStudent p1=head1->next;
 	while(p1!=head1)
@@ -236,7 +228,7 @@ void lendbook(DLink head)
 }
 //**************************************************************************
 //还书功能函数
-void returnbook(DLink head)
+Status returnbook(DLink head)
 {
 	FILE *fp;//用来开reader.txt文件
 	FILE *fp1;//用来开librarybook.txt
@@ -253,13 +245,14 @@ void returnbook(DLink head)
 	scanf("%s",return_data.ID);
 	printf("姓名：");
 	scanf("%s",return_data.stuname);
-printf("test1\n");
+//printf("test1\n");
 	fp=fopen("reader.txt","r");
 	if(!fp1)
 	{
-		perror("fopen");
+		printf("出错，无库存文件！");
+		return ERROR;
 	}
-printf("test2\n");
+//printf("test2\n");
 	pStudent p=head1;
 	while(!feof(fp))
 	{
@@ -274,25 +267,23 @@ printf("test2\n");
 
 			p->next=message;
 			message->prev=p;
-			message->next=p->next;
+			message->next=NULL;
 			p=message;
 		}
 	}
-printf("test3\n");
+//printf("test3\n");
 	p=head1->next;
 	while(p!=NULL)
 	{
-		printf("test\n");
+		//printf("test\n");
 		if(strcmp(return_data.CLASS,p->shuju.CLASS)==0&&strcmp(return_data.ID,p->shuju.ID)==0&&strcmp(return_data.stuname,p->shuju.stuname)==0)
 		{
 			p->prev->next=p->next;
-			printf("test\n");
+			//printf("test\n");
 			p->next->prev=p->prev;
-			printf("test\n");//把和还书人信息一样的结点删去
-			//free(p);
-			p->next=NULL;
-			p->prev=NULL;
-			printf("test\n");
+			//printf("test\n");//把和还书人信息一样的结点删去
+			free(p);
+			//printf("test\n");
 			break;
 		}
 		else
@@ -302,28 +293,14 @@ printf("test3\n");
 	}
 	if(p==NULL)
 	{
-		printf("该用户未借阅过图书，还书失败");
-		printf("请输入任意按键返回菜单！");
+		printf("该用户未借阅过图书，还书失败!\n");
+		printf("请输入任意按键返回菜单！\n");
 		system("pause");
+		return ERROR;
 	}
-printf("test4\n");
+//printf("test4\n");
 	fclose(fp);
-	fp=fopen("reader.txt","w");
-	fclose(fp);
-	fp=fp=fopen("reader.txt","a");
-	if(!fp)
-	{
-		printf("出错，无库存文件！");
-		system("pause");
-	}
-printf("test5\n");
-	pStudent p1=head1->next;
-	while(p1!=NULL)
-	{
-		fprintf(fp,"%s\t%s\t%s\n",p1->shuju.CLASS,p1->shuju.ID,p1->shuju.stuname);
-		p1=p1->next;
-	}
-	fclose(fp);
+
 
 
 
@@ -342,6 +319,8 @@ printf("test5\n");
 	if(!fp)
 	{
 		printf("出错，无库存文件！");
+		system("pause");
+		return ERROR;
 	}
 
 	int n=0;//读取文件的内容存储到链表和借书一样的道理
@@ -355,7 +334,6 @@ printf("test5\n");
 	for(int i=0;i<n-1;i++)
 	{
 		fread(&temp1,sizeof(Book),1,fp1);
-		printf("%d\t%s\t%s\t%d\n",temp1.num,temp1.bookname,temp1.author,temp1.booknum);
 		DLink newbook=(DLink)malloc(sizeof(LNode));
 		if(newbook)
 		{
@@ -372,14 +350,43 @@ printf("test5\n");
 	fclose(fp1);
 
 	p2=head->next;//对链表中暂存的数据进行修改
+	int flag=0;
 	while(p2!=NULL)
 	{
 		if(strcmp(return_book.bookname,p2->date.bookname)==0&&strcmp(return_book.author,p2->date.author)==0)
 		{
 			p2->date.booknum=p2->date.booknum+1;
+			flag++;
 		}
 		p2=p2->next;
 	}
+
+	//如果找不到要还的书
+	if(flag==0)
+	{
+		printf("图书馆内没有该图书，还书失败！\n");
+		system("pause");
+		return ERROR;
+	}
+
+	//修改本地记录消除借书记录的信息
+	fp=fopen("reader.txt","w");
+	fclose(fp);
+	fp=fp=fopen("reader.txt","a");
+	if(!fp)
+	{
+		printf("出错，无库存文件！");
+		system("pause");
+		return ERROR;
+	}
+	pStudent p1=head1->next;
+	while(p1!=NULL)
+	{
+		fprintf(fp,"%s\t%s\t%s\n",p1->shuju.CLASS,p1->shuju.ID,p1->shuju.stuname);
+		p1=p1->next;
+	}
+	fclose(fp);
+
 
 	fp1=fopen("librarybook.txt","w");//采用打开关闭清空数据之后再把修改之后的链表数据存入
 	fclose(fp1);
@@ -395,5 +402,8 @@ printf("test5\n");
 		p2=p2->next;
 	}
 	fclose(fp);
+	printf("还书成功!\n");
+	system("pause");
+	return SUCCESS;
 
 }

@@ -4,37 +4,38 @@
 #include"Librarymanagementsystem.h"
 
 //管理员登录函数
-void ADLogin (char user[30],char password[30])//用于用户输入账户密码
+Status ADLogin (char user[30],char password[30])//用于用户输入账户密码
 {
 	int i=0,flag=0;
-	printf("\t***************************\n"
-		"\t你仅有三次输入机会\n");
+	printf( "\n\n\n\n\n\n\n\n"
+		"\t\t\t\t\t\t登录\n"
+		"\t\t\t\t***************************\n"
+		"\t\t\t\t你仅有三次输入机会\n");
 	do
 	{
-		printf("\t请输入用户名：");
+		printf("\t\t\t\t请输入用户名：");
 		gets(user);
-		printf("\t请输入密码：");
+		printf("\t\t\t\t请输入密码：");
 		gets(password);
 		flag=ADComparePassword(user,password);
 		//printf("%d",flag);
 		if (flag==1)
 		{
-			printf( "\t***************************\n"
-				"\n\t欢迎进入管理员权限系统！\n");
-			Administratormenu();
-			break;
+			printf( "\t\t\t\t***************************\n");
+			return SUCCESS;
 		}
 		else
 		{
-			printf("\t您输入的用户名或密码错误。\n");
+			printf("\t\t\t\t您输入的用户名或密码错误。\n");
 			i++;
 		}
 	}while(i<3);
 	if(flag==0)
 	{
 		system("cls");
-		printf( "\t您已经输入错误三次，即将退出程序。\n"
-			"\t程序退出！");
+		printf( "\t\t\t\t您已经输入错误三次，即将退出程序。\n"
+			"\t\t\t\t程序退出！"
+			"\t\t\t\t***************************\n");
 			system("pause");
 			exit(0);
 	}
@@ -65,46 +66,45 @@ Status ADComparePassword (char *user,char *password)//用于审核密码
 		N++;
 	}
 	fclose(fp);
-	//if(strcmp(user,username)==0&&strcmp(pass,password)==0)
-		//return SUCCESS;
-	//else
-		return ERROR;
+	return ERROR;
 }
 
 
 
 //用户登录函数
-void ULogin(char user[30],char password[30])
+Status ULogin(char user[30],char password[30])
 {
 	int i=0,flag=0;
-	printf("\t***************************\n"
-		"\t你仅有三次输入机会\n");
+	printf( "\n\n\n\n\n\n\n\n"
+		"\t\t\t\t\t\t登录\n"
+		"\t\t\t\t***************************\n"
+		"\t\t\t\t你仅有三次输入机会\n");
 	do
 	{
-		printf("\t请输入用户名：");
+		printf("\t\t\t\t请输入用户名：");
 		gets(user);
-		printf("\t请输入密码：");
+		printf("\t\t\t\t请输入密码：");
 		gets(password);
 		flag=UComparePassword(user,password);
 		//printf("%d",flag);
 		if (flag==1)
 		{
-			printf( "\t***************************\n"
-				"\n\t欢迎进入图书借阅系统！\n");
-			//Administratormenu();
-			break;
+			printf( "\t\t\t\t***************************\n");
+			system("pause");
+			return SUCCESS;
 		}
 		else
 		{
-			printf("\t您输入的用户名或密码错误。\n");
+			printf("\t\t\t\t您输入的用户名或密码错误。\n");
 			i++;
 		}
 	}while(i<3);
 	if(flag==0)
 	{
 		system("cls");
-		printf( "\t您已经输入错误三次，即将退出程序。\n"
-			"\t程序退出！");
+		printf( "\t\t\t\t您已经输入错误三次，即将退出程序。\n"
+			"\t\t\t\t程序退出！"
+			"\t\t\t\t***************************\n");
 			system("pause");
 			exit(0);
 	}
