@@ -54,11 +54,9 @@ Status ADComparePassword (char *user,char *password)//用于审核密码
 		system("pause");
 		exit(0);
 	}
-	//char username[30]={'3','1','2','0','0','0','2','5','2','4'};
-	//char pass[30]={'1','2','3','4','5','6'};
 	while(!feof(fp))
 	{
-		fscanf(fp,"%s %s",s[N].username,s[N].password);
+		fscanf(fp,"%s %s\n",s[N].username,s[N].password);
 		if(strcmp(user,s[N].username)==0&&strcmp(password,s[N].password)==0)
 		{
 			return SUCCESS;
@@ -76,9 +74,11 @@ Status ULogin(char user[30],char password[30])
 {
 	int i=0,flag=0;
 	printf( "\n\n\n\n\n\n\n\n"
-		"\t\t\t\t\t\t登录\n"
+		"\t\t\t\t\t  登录\n"
 		"\t\t\t\t***************************\n"
-		"\t\t\t\t你仅有三次输入机会\n");
+		"\t\t\t\t1、有三次输入机会\n"
+		"\t\t\t\t2、用户名为学号\n"
+		"\t\t\t\t3、密码为身份证后六位\n\n");
 	do
 	{
 		printf("\t\t\t\t请输入用户名：");

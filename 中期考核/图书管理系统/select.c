@@ -5,7 +5,7 @@
 void identityselect()
 {
 	char opotion;
-	printf("\t\t\t\t请选择你的身份：");
+	printf("\t\t\t\t请选择：");
 		while(scanf("%c",&opotion)==0||getchar()!='\n')
 		{
 			printf("\t\t\t\t输入了非法字符，请重新输入：");
@@ -83,10 +83,28 @@ void Administratorselect()//管理者选项
 				Administratorselect();
 				break;
 			}
+			case 3:
+				system("cls");
+				zhuceyonhu();
+				system("cls");
+				Administratormenu();
+				Administratorselect();
+				break;
+			case 4:
+				system("cls");
+				readbook();
+				system("pause");
+				system("cls");
+				Administratormenu();
+				Administratorselect();
+				break;
+
+
 			case 0:
 				system("cls");
 				identitymenu();
 				identityselect();
+				break;
 			default:
 				printf("\t\t\t\t非法输入，请重新输入!\n");
 				system("pause");
@@ -137,11 +155,15 @@ void Userselect()
 			system("cls");
 			searchbook();
 			system("pause");
+			system("cls");
+			Usermenu();
+			Userselect();
 			break;
 		case 4:
 			system("cls");
 			readbook();
 			system("pause");
+			system("cls");
 			Usermenu();
 			Userselect();
 			break;

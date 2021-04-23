@@ -37,6 +37,7 @@ typedef struct yonhu
 	char CLASS[30];
 	char ID[20];
 	char stuname[10];
+	int yuyuenum;
 }yonhu;
 typedef struct stu
 {
@@ -52,6 +53,8 @@ typedef Book ElemType;
 void identitymenu();//身份菜单
 void Administratormenu();//管理员菜单
 void Usermenu();//用户菜单
+void searchbookmenu();
+void yuyuemenu();
 //***************************************
 //菜单函数
 void Administratorselect();
@@ -71,13 +74,14 @@ Status UComparePassword (char *user,char *password);
 Status addbook();
 int jilushubenzhonlei(int *x);
 void deletebook(DLink head);
-//Status deletebook();
+Status zhuceyonhu();
 //***************************************
 //用户功能模块函数
 Status readbook();
 void searchbook();
-void lendbook(DLink head);
+Status lendbook(DLink head);
 Status returnbook(DLink head);
+Status yuyue(int x);
 
 //***************************************
 //链表使用基本函数
