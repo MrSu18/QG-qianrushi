@@ -1,0 +1,15 @@
+# depslib dependency file v1.0
+1619623548 source:l:\c\qg\teamexam\笔记管理系统\is.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"IS.h"
+
+1619623548 l:\c\qg\teamexam\笔记管理系统\is.h
+
+1619616895 source:l:\c\qg\teamexam\笔记管理系统\main.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"IS.h"
+
