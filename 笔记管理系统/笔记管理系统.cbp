@@ -35,6 +35,9 @@
 		<Unit filename="Is.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="RM.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="main.c">
 			<Option compilerVar="CC" />
 		</Unit>

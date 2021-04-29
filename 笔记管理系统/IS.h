@@ -13,7 +13,7 @@ Status IStrees(char *p);//IS-a函数
 Status ISgrep(char *p);//搜索包含搜寻内容的文件
 //*******************************
 //删除文件函数
-Status deldir(char *p);
+Status deldir(char *p);//删除指定文件夹以及文件夹下的所有内容
 
 
 
