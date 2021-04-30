@@ -94,3 +94,19 @@ Status S_filedir_r(char *s)//参数s是需要打开的文本文件的文件名
 		fclose(fp);
 	}
 }
+
+void fvisit(FolderPtr* q,char *filename)
+{
+	FILE *fp=fopen(filename,"a");
+	if(!fp)
+	{
+		printf("打开文件出错!\n");
+		return ERROR;
+	}
+	else
+	{
+		fprintf(fp,"%s\t%s\t%s\t%s\t%s\t%s\n",(*q)->folder_title,(*q)->folder_tag[0],(*q)->folder_tag[1],(*q)->folder_tag[2],(*q)->folder_tag[3],(*q)->folder_tag[4]);
+		fclose(fp);
+		return TRUE;
+	}
+}

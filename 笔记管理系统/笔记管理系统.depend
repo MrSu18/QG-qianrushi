@@ -22,7 +22,7 @@
 	<string.h>
 	"IS.h"
 
-1619771703 source:l:\c\qg\teamexam\笔记管理系统\file_rw.c
+1619785616 source:l:\c\qg\teamexam\笔记管理系统\file_rw.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
@@ -31,10 +31,17 @@
 
 1619770377 l:\c\qg\teamexam\笔记管理系统\function.h
 
-1619770398 l:\c\qg\teamexam\笔记管理系统\file_rw.h
+1619785561 l:\c\qg\teamexam\笔记管理系统\file_rw.h
 	"IS.h"
 
 1619774749 source:l:\c\qg\teamexam\笔记管理系统\mv.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"IS.h"
+	"function.h"
+
+1619775173 source:l:\c\qg\teamexam\笔记管理系统\sort.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>

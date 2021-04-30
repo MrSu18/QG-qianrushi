@@ -20,9 +20,12 @@ int main()
 	gets(head->user_next->user_name);
 	U_file_w(head);*/
 
-	char instrction [100];
+	/*char instrction [100];
 	gets(instrction);
-	sortfile(instrction);
+	mvfile(instrction);*/
+
+	//FolderPtr p = (FolderPtr)malloc(sizeof(Folder));
+	//gets(p->folder_title);
 
 	return 0;
 }
