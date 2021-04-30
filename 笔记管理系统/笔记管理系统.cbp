@@ -38,6 +38,11 @@
 		<Unit filename="RM.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="file_rw.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="file_rw.h" />
+		<Unit filename="function.h" />
 		<Unit filename="main.c">
 			<Option compilerVar="CC" />
 		</Unit>

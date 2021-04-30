@@ -2,20 +2,23 @@
 #include <stdlib.h>
 #include <string.h>
 #include "IS.h"
+#include "function.h"
+#include "file_rw.h"
 
 int main()
 {
-	char s[255];
-	char instrction[255];
-	gets(instrction);
-	chdir(instrction);
-	system("cd");
-	printf("ÊäÈëÖ¸Áî£º");
-	gets(s);
-	deldir(s);
-	//system(s);
+	UserPtr head =(UserPtr)malloc(sizeof(User));
+	head->user_next=NULL;
+	head->user_name[0]='\0';
+	head->user_password[0]='\0';
+	head->user_id[0]='\0';
 
 
+	U_file_r(head);
+	printf("%s\t%s\t%s\t%s\n",head->user_next->user_name,head->user_next->user_password,head->user_next->user_id,head->user_next->user_folder->root->folder_title);
+
+	gets(head->user_next->user_name);
+	U_file_w(head);
 
 	return 0;
 }

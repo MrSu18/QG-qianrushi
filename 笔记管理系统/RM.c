@@ -23,10 +23,10 @@ Status deldir(char *p)
 			{
 				cmd[j]=p[n];
 			}
-			printf("%s\n",cmd);
+			//printf("%s\n",cmd);
 			system(cmd);
 			printf("指令执行成功！\n");
-			return SUCCESS;
+			return TRUE;
 		}
 
 	}

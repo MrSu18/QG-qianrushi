@@ -1,10 +1,7 @@
 #ifndef IS_H_INCLUDED
 #define IS_H_INCLUDED
-typedef enum Status
-{
-	SUCCESS=1,
-	ERROR=0
-}Status;
+#include"function.h"
+
 //*****************************
 //显示指令函数
 Status IS(char *p);//显示当前工作目录文件

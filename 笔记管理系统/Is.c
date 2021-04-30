@@ -12,7 +12,7 @@ Status IS(char *p)//显示当前路劲下的文件和文件夹
 	else
 	{
 		system("dir");
-		return SUCCESS;
+		return TRUE;
 	}
 }
 Status IS_(char *p)//IS<路径>函数
@@ -41,14 +41,14 @@ Status IS_(char *p)//IS<路径>函数
 			p[i]=' ';
 			strcat(cmd,p);
 			system(cmd);
-			return SUCCESS;
+			return TRUE;
 		}
 	}
 }
 Status IStrees(char *p)
 {
 	system("tree /f");
-	return SUCCESS;
+	return TRUE;
 }
 Status ISgrep(char *p)
 {
@@ -82,5 +82,5 @@ Status ISgrep(char *p)
 	cmd[22+j+n+0]=' ';cmd[22+j+n+1]='.';cmd[22+j+n+2]='/';cmd[22+j+n+3]='*';cmd[22+j+n+4]='\0';//
 	//printf("%s",cmd);
 	system(cmd);
-	return SUCCESS;
+	return TRUE;
 }
