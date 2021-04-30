@@ -5,10 +5,10 @@
 	<string.h>
 	"IS.h"
 
-1619773772 l:\c\qg\teamexam\笔记管理系统\is.h
+1619775155 l:\c\qg\teamexam\笔记管理系统\is.h
 	"function.h"
 
-1619773955 source:l:\c\qg\teamexam\笔记管理系统\main.c
+1619775155 source:l:\c\qg\teamexam\笔记管理系统\main.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
@@ -33,4 +33,11 @@
 
 1619770398 l:\c\qg\teamexam\笔记管理系统\file_rw.h
 	"IS.h"
+
+1619774749 source:l:\c\qg\teamexam\笔记管理系统\mv.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	"IS.h"
+	"function.h"
 

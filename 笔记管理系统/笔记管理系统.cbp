@@ -49,6 +49,9 @@
 		<Unit filename="mv.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="sort.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Extensions>
 			<code_completion />
 			<envvars />

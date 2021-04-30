@@ -13,8 +13,10 @@ Status ISgrep(char *p);//搜索包含搜寻内容的文件
 Status deldir(char *p);//删除指定文件夹以及文件夹下的所有内容
 //*******************************
 //移动文件
+Status SplitCommand(char *str,char *order,char *title0,char *title1);//切割函数
 Status mvfile(char *p);//将指定文件移动到指定文件夹下
 //*******************************
+Status sortfile(char *p);//将目标文件夹进行排序
 
 
 

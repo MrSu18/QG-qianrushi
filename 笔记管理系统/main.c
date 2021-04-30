@@ -22,7 +22,7 @@ int main()
 
 	char instrction [100];
 	gets(instrction);
-	mvfile(instrction);
+	sortfile(instrction);
 
 	return 0;
 }
