@@ -16,16 +16,18 @@ Status U_file_r(User*head)//对用户信息文本的读取
 	{
 		UserPtr p = (UserPtr)malloc(sizeof(User));
 		p=head;
-		//给节点以及里面的指针申请空间
-		UserPtr newnode = (UserPtr)malloc(sizeof(User));
-		newnode->user_folder=(FolderTreePtr)malloc(sizeof(FolderTree));
-		newnode->user_folder->root=(FolderPtr)malloc(sizeof(Folder));
+
 		//给temp以及后面的指针申请空间
 		User temp;
 		temp.user_folder->root=(FolderPtr)malloc(sizeof(Folder));
 
 		while(!feof(fp))
 		{
+			//给节点以及里面的指针申请空间
+			UserPtr newnode = (UserPtr)malloc(sizeof(User));
+			newnode->user_folder=(FolderTreePtr)malloc(sizeof(FolderTree));
+			newnode->user_folder->root=(FolderPtr)malloc(sizeof(Folder));
+			//从文件中读取
 			fscanf(fp,"%s\t%s\t%s\t%s\n",temp.user_name,temp.user_password,temp.user_id,temp.user_folder->root->folder_title);//从文件中读取一个节点的数据存在temp中
 			//以下把文件读取出来的信息存入节点中
 			strcpy(newnode->user_name , temp.user_name);
@@ -73,29 +75,7 @@ Status U_file_w(User*head)//把用户链表中的信息存入本地文本
 
 }
 
-Status S_filedir_r(char *s)//参数s是需要打开的文本文件的文件名
-{
-	FILE *fp=fopen(s,"r");
-	if(!fp)
-	{
-		printf("打开文件出错!\n");
-		return ERROR;
-	}
-	else
-	{
-		Folder temp;
-		fscanf(fp,"%s\t%s\t%s\t%s\t%s\t%s\n",temp.folder_title,temp.folder_tag[0].tag_node,temp.folder_tag[1].tag_node,temp.folder_tag[2].tag_node,temp.folder_tag[3].tag_node,temp.folder_tag[4].tag_node);
-		printf("%s\t%s\t%s\t%s\t%s\t%s\n",temp.folder_title,temp.folder_tag[0].tag_node,temp.folder_tag[1].tag_node,temp.folder_tag[2].tag_node,temp.folder_tag[3].tag_node,temp.folder_tag[4].tag_node);
-		if(strcmp(s,temp.folder_title)==0)
-		{
-			printf("成功");
-			return TRUE;
-		}
-		fclose(fp);
-	}
-}
-
-void fvisit(FolderPtr* q,char *filename)
+void fvisit(FolderPtr* q,char *filename)//写入只要在在遍历中，把visit结点改成fvisit就好了，filrname改成用户根目录加.txt
 {
 	FILE *fp=fopen(filename,"a");
 	if(!fp)
@@ -105,8 +85,88 @@ void fvisit(FolderPtr* q,char *filename)
 	}
 	else
 	{
-		fprintf(fp,"%s\t%s\t%s\t%s\t%s\t%s\n",(*q)->folder_title,(*q)->folder_tag[0],(*q)->folder_tag[1],(*q)->folder_tag[2],(*q)->folder_tag[3],(*q)->folder_tag[4]);
+		fprintf(fp,"%s\t%s\t%s\t%s\t%s\t%s\n"   ,(*q)->folder_title
+							,(*q)->folder_tag[0].tag_node
+							,(*q)->folder_tag[1].tag_node
+							,(*q)->folder_tag[2].tag_node
+							,(*q)->folder_tag[3].tag_node
+							,(*q)->folder_tag[4].tag_node);
 		fclose(fp);
+		return TRUE;
+	}
+}
+
+Status file_r(FILE *fp,FilePtr head)//对对应的文件名进行读取
+{
+	FilePtr p =(FilePtr)malloc(sizeof(File));
+	p=head;
+	File temp;
+	char pause[10]={'p','a','u','s','e','\0'};
+
+	while(strcmp(temp.file_title,pause)!=0)
+	{
+		fscanf(fp,"%s\t%s\t%s\t%s\t%s\n",temp.file_title
+						,temp.file_tag[0].tag_node
+						,temp.file_tag[1].tag_node
+						,temp.file_tag[2].tag_node
+						,temp.file_tag[3].tag_node
+						,temp.file_tag[4].tag_node);
+
+		FilePtr newnode = (FilePtr)malloc(sizeof(File));
+
+		strcpy(newnode->file_title,temp.file_title);
+		strcpy(newnode->file_tag[0].tag_node,temp.file_tag[0].tag_node);
+		strcpy(newnode->file_tag[1].tag_node,temp.file_tag[1].tag_node);
+		strcpy(newnode->file_tag[2].tag_node,temp.file_tag[2].tag_node);
+		strcpy(newnode->file_tag[3].tag_node,temp.file_tag[3].tag_node);
+		strcpy(newnode->file_tag[4].tag_node,temp.file_tag[4].tag_node);
+
+		p->next=newnode;
+		p=newnode;
+		newnode->next=NULL;
+	}
+	return TRUE;
+}
+
+Status file_w(FilePtr head)//对文件名链表进行写入文本文件
+{
+	FILE *fp = fopen("filename.txt","a");
+	if(!fp)
+	{
+		printf("打开文件出错!\n");
+		return ERROR;
+	}
+	else
+	{
+		FilePtr p =(FilePtr)malloc(sizeof(File));
+		p=head->next;
+		while(p!=NULL)
+		{
+			fprintf(fp,"%s\t%s\t%s\t%s\t%s\n",p->file_title
+							 ,p->file_tag[0].tag_node
+							 ,p->file_tag[1].tag_node
+							 ,p->file_tag[2].tag_node
+							 ,p->file_tag[3].tag_node
+							 ,p->file_tag[4].tag_node);
+		}
+		//给文件写入一个暂停标志
+		File pause;
+		strcpy(pause.file_title,"pause\0");
+		strcpy(pause.file_tag[0].tag_node,"\0");
+		strcpy(pause.file_tag[1].tag_node,"\0");
+		strcpy(pause.file_tag[2].tag_node,"\0");
+		strcpy(pause.file_tag[3].tag_node,"\0");
+		strcpy(pause.file_tag[4].tag_node,"\0");
+
+		fprintf(fp,"%s\t%s\t%s\t%s\t%s\n",pause.file_title
+						 ,pause.file_tag[0].tag_node
+						 ,pause.file_tag[1].tag_node
+						 ,pause.file_tag[2].tag_node
+						 ,pause.file_tag[3].tag_node
+						 ,pause.file_tag[4].tag_node);
+
+		fclose(fp);
+
 		return TRUE;
 	}
 }

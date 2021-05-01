@@ -7,25 +7,37 @@
 
 int main()
 {
-	/*UserPtr head =(UserPtr)malloc(sizeof(User));
-	head->user_next=NULL;
-	head->user_name[0]='\0';
-	head->user_password[0]='\0';
-	head->user_id[0]='\0';
+	char s[10];
+	gets(s);
+	FolderTreePtr base=(FolderTreePtr)malloc(sizeof(FolderTree));
+	base->root=(FolderPtr)malloc(sizeof(Folder));
+	layercreat(base,s);
+	Tree_Traverse(base,visit);
+	/*printf("%s\t%s\t%s\t%s\t%s\n"   ,base->root->folder_title
+					,base->root->folder_tag[0].tag_node
+					,base->root->folder_tag[1].tag_node
+					,base->root->folder_tag[2].tag_node
+					,base->root->folder_tag[3].tag_node
+					,base->root->folder_tag[4].tag_node);
 
+	printf("%s\t%s\t%s\t%s\t%s\n"   ,base->root->left->folder_title
+					,base->root->left->folder_tag[0].tag_node
+					,base->root->left->folder_tag[1].tag_node
+					,base->root->left->folder_tag[2].tag_node
+					,base->root->left->folder_tag[3].tag_node
+					,base->root->left->folder_tag[4].tag_node);
 
-	U_file_r(head);
-	printf("%s\t%s\t%s\t%s\n",head->user_next->user_name,head->user_next->user_password,head->user_next->user_id,head->user_next->user_folder->root->folder_title);
+	printf("%s\t%s\t%s\t%s\t%s\n"   ,base->root->right->folder_title
+					,base->root->right->folder_tag[0].tag_node
+					,base->root->right->folder_tag[1].tag_node
+					,base->root->right->folder_tag[2].tag_node
+					,base->root->right->folder_tag[3].tag_node
+					,base->root->right->folder_tag[4].tag_node);*/
 
-	gets(head->user_next->user_name);
-	U_file_w(head);*/
-
-	/*char instrction [100];
-	gets(instrction);
-	mvfile(instrction);*/
-
-	//FolderPtr p = (FolderPtr)malloc(sizeof(Folder));
-	//gets(p->folder_title);
+	/*if(base->root->left->left==NULL)
+	{
+		printf("ÊÇ¿Õ\n");
+	}*/
 
 	return 0;
 }

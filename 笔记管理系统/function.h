@@ -57,9 +57,40 @@ extern User* user;
 
 void build_dir(User* newn);//注册时初始化目录
 Status DIR_init(FolderTreePtr* F_T);//文件目录树初始化
-Status DIR_insert(FolderPtr );//文件夹插入
-
 
 User* user_insert();
 User* user_name_search(User* user_temp, char* name_input);
 User* user_id_search(User* user_temp, char* id_input);
+
+void visit (FolderPtr q);
+
+
+
+//功能队列
+
+typedef struct Qnode
+{
+	FolderPtr pdata;                   //数据域指针
+	struct Qnode* Qnext;            //指向当前结点的下一结点
+} QNode;
+
+
+typedef struct Lqueue
+{
+	QNode* front;                   //队头
+	QNode* rear;                    //队尾
+	size_t length;            //队列长度
+} LQueue;
+
+
+
+//初始化队列
+Status Queue_Init(LQueue** q);
+//判断队列是否为空
+Status Queue_Empty(LQueue* q);
+//进队
+Status Queue_In(LQueue** q, FolderPtr BNode);
+//出队
+Status Queue_Out(LQueue** q);
+//队头
+FolderPtr Queue_Front(LQueue* q);

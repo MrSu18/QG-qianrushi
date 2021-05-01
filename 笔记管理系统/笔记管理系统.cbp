@@ -42,7 +42,13 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="file_rw.h" />
+		<Unit filename="function.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="function.h" />
+		<Unit filename="layercreat.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Unit filename="main.c">
 			<Option compilerVar="CC" />
 		</Unit>
