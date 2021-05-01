@@ -105,12 +105,13 @@ Status file_r(FILE *fp,FilePtr head)//对对应的文件名进行读取
 
 	while(strcmp(temp.file_title,pause)!=0)
 	{
-		fscanf(fp,"%s\t%s\t%s\t%s\t%s\n",temp.file_title
+		fscanf(fp,"%s\t%s\t%s\t%s\t%s\t%s\n",temp.file_title
 						,temp.file_tag[0].tag_node
 						,temp.file_tag[1].tag_node
 						,temp.file_tag[2].tag_node
 						,temp.file_tag[3].tag_node
 						,temp.file_tag[4].tag_node);
+		//printf("%s\n",temp.file_title);
 
 		FilePtr newnode = (FilePtr)malloc(sizeof(File));
 
@@ -121,10 +122,19 @@ Status file_r(FILE *fp,FilePtr head)//对对应的文件名进行读取
 		strcpy(newnode->file_tag[3].tag_node,temp.file_tag[3].tag_node);
 		strcpy(newnode->file_tag[4].tag_node,temp.file_tag[4].tag_node);
 
+		printf("%s\t%s\t%s\t%s\t%s\t%s\n",temp.file_title
+						,temp.file_tag[0].tag_node
+						,temp.file_tag[1].tag_node
+						,temp.file_tag[2].tag_node
+						,temp.file_tag[3].tag_node
+						,temp.file_tag[4].tag_node);
+
 		p->next=newnode;
 		p=newnode;
 		newnode->next=NULL;
+		//printf("test\n");
 	}
+	free(p);
 	return TRUE;
 }
 
@@ -142,23 +152,23 @@ Status file_w(FilePtr head)//对文件名链表进行写入文本文件
 		p=head->next;
 		while(p!=NULL)
 		{
-			fprintf(fp,"%s\t%s\t%s\t%s\t%s\n",p->file_title
-							 ,p->file_tag[0].tag_node
-							 ,p->file_tag[1].tag_node
-							 ,p->file_tag[2].tag_node
-							 ,p->file_tag[3].tag_node
-							 ,p->file_tag[4].tag_node);
+			fprintf(fp,"%s\t%s\t%s\t%s\t%s\t%s\n",p->file_title
+							     ,p->file_tag[0].tag_node
+							     ,p->file_tag[1].tag_node
+							     ,p->file_tag[2].tag_node
+							     ,p->file_tag[3].tag_node
+							     ,p->file_tag[4].tag_node);
 		}
 		//给文件写入一个暂停标志
 		File pause;
 		strcpy(pause.file_title,"pause\0");
-		strcpy(pause.file_tag[0].tag_node,"\0");
-		strcpy(pause.file_tag[1].tag_node,"\0");
-		strcpy(pause.file_tag[2].tag_node,"\0");
-		strcpy(pause.file_tag[3].tag_node,"\0");
-		strcpy(pause.file_tag[4].tag_node,"\0");
+		strcpy(pause.file_tag[0].tag_node," \0");
+		strcpy(pause.file_tag[1].tag_node," \0");
+		strcpy(pause.file_tag[2].tag_node," \0");
+		strcpy(pause.file_tag[3].tag_node," \0");
+		strcpy(pause.file_tag[4].tag_node," \0");
 
-		fprintf(fp,"%s\t%s\t%s\t%s\t%s\n",pause.file_title
+		fprintf(fp,"%s\t%s\t%s\t%s\t%s\t%s\n",pause.file_title
 						 ,pause.file_tag[0].tag_node
 						 ,pause.file_tag[1].tag_node
 						 ,pause.file_tag[2].tag_node

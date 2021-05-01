@@ -45,12 +45,30 @@ Status IS_(char *p)//IS<Â·¾¶>º¯Êý
 		}
 	}
 }
-Status IStrees(char *p,char*s)
+Status IStrees(char *p)
 {
 	system("tree /f");
 	return TRUE;
 }
 Status ISgrep(char *p)
 {
+	char s[100]={'c','d',' '};
 
+	int i=3,j=0;
+	while(p[i]!='>')
+	{
+		s[3+j]=p[i];
+		i++;j++;
+	}
+	s[3+j]=' ';
+	strcat(s,"&& findstr /s /m ");
+	int n=0;
+	while(p[i+n+5]!='\0')
+	{
+		s[21+j+n]=p[i+n+5];
+		n++;
+	}
+	s[21+j+n]=' ';s[21+j+n+1]='.';s[21+j+n+2]=92;s[21+j+n+3]='*';s[21+j+n+4]='\0';
+	printf("%s\n",s);
+	system(s);
 }

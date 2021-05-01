@@ -4,9 +4,9 @@
 #include "function.h"
 #include "file_rw.h"
 
-Status layercreat(FolderTreePtr base,char *s)//创建整棵树
+Status layercreat(FolderTreePtr base,char *filename)//创建整棵树
 {
-	FILE *fp=fopen("刘骏帆笔记.txt","r");
+	FILE *fp=fopen(filename,"r");
 	if(!fp)
 	{
 		printf("打开文件出错!\n");

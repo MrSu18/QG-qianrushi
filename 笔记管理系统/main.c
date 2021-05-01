@@ -7,37 +7,38 @@
 
 int main()
 {
-	char s[10];
-	gets(s);
-	FolderTreePtr base=(FolderTreePtr)malloc(sizeof(FolderTree));
-	base->root=(FolderPtr)malloc(sizeof(Folder));
-	layercreat(base,s);
-	Tree_Traverse(base,visit);
-	/*printf("%s\t%s\t%s\t%s\t%s\n"   ,base->root->folder_title
-					,base->root->folder_tag[0].tag_node
-					,base->root->folder_tag[1].tag_node
-					,base->root->folder_tag[2].tag_node
-					,base->root->folder_tag[3].tag_node
-					,base->root->folder_tag[4].tag_node);
+	FILE* fp =fopen("filename.txt","r");
+	FILE* fp1 =fopen("filename.txt","r");
+	FilePtr head1 =(FilePtr)malloc(sizeof(File));
+	head1->next=NULL;
+	FilePtr head2 =(FilePtr)malloc(sizeof(File));
+	head2->next=NULL;
+	file_r(fp,head1);
+	file_r(fp,head2);
+	fclose(fp);
+	printf("%s\t%s\t%s\t%s\t%s\t%s\n",head1->next->file_title
+					 ,head1->next->file_tag[0].tag_node
+					 ,head1->next->file_tag[1].tag_node
+					 ,head1->next->file_tag[2].tag_node
+					 ,head1->next->file_tag[3].tag_node
+					 ,head1->next->file_tag[4].tag_node);
 
-	printf("%s\t%s\t%s\t%s\t%s\n"   ,base->root->left->folder_title
-					,base->root->left->folder_tag[0].tag_node
-					,base->root->left->folder_tag[1].tag_node
-					,base->root->left->folder_tag[2].tag_node
-					,base->root->left->folder_tag[3].tag_node
-					,base->root->left->folder_tag[4].tag_node);
+	/*printf("%s\t%s\t%s\t%s\t%s\t%s\n",head1->next->next->file_title
+					 ,head1->next->next->file_tag[0].tag_node
+					 ,head1->next->next->file_tag[1].tag_node
+					 ,head1->next->next->file_tag[2].tag_node
+					 ,head1->next->next->file_tag[3].tag_node
+					 ,head1->next->next->file_tag[4].tag_node);*/
 
-	printf("%s\t%s\t%s\t%s\t%s\n"   ,base->root->right->folder_title
-					,base->root->right->folder_tag[0].tag_node
-					,base->root->right->folder_tag[1].tag_node
-					,base->root->right->folder_tag[2].tag_node
-					,base->root->right->folder_tag[3].tag_node
-					,base->root->right->folder_tag[4].tag_node);*/
 
-	/*if(base->root->left->left==NULL)
-	{
-		printf("ÊÇ¿Õ\n");
-	}*/
+	printf("%s\n",head2->next->file_title);
+
+	/*printf("%s\t%s\t%s\t%s\t%s\t%s\n",head2->next->file_title
+					 ,head2->next->file_tag[0].tag_node
+					 ,head2->next->file_tag[1].tag_node
+					 ,head2->next->file_tag[2].tag_node
+					 ,head2->next->file_tag[3].tag_node
+					 ,head2->next->file_tag[4].tag_node);*/
 
 	return 0;
 }
