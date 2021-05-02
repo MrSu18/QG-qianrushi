@@ -65,7 +65,7 @@ Status mvfile(char *p)//ÒÆ¶¯
 
 	strcat(tureorder,title1);
 
-	printf("%s\n",tureorder);
+	//printf("%s\n",tureorder);
 	system(tureorder);
 	system("pause");
 }
