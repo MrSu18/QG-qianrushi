@@ -14,6 +14,15 @@ Status U_file_r(User*head)//对用户文件的读取
 	}
 	else
 	{
+		if(!feof(fp))
+		{
+			fscanf(fp,"%s\t%s\t%s\t%s\n",temp.user_name,temp.user_password,temp.user_id,temp.user_folder->root->folder_title);//从文件中读取一个节点的数据存在temp中
+			strcpy(head->user_name , temp.user_name);
+			strcpy(head->user_password , temp.user_password);
+			strcpy(head->user_id , temp.user_id);
+			strcpy(head->user_folder->root->folder_title , temp.user_folder->root->folder_title);
+		}
+
 		UserPtr p = (UserPtr)malloc(sizeof(User));
 		p=head;
 
