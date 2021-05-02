@@ -1,14 +1,14 @@
 # depslib dependency file v1.0
-1619947289 source:l:\c\qg\teamexam\笔记管理系统\is.c
+1619951356 source:l:\c\qg\teamexam\笔记管理系统\is.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
 	"IS.h"
 
-1619775155 l:\c\qg\teamexam\笔记管理系统\is.h
+1619953264 l:\c\qg\teamexam\笔记管理系统\is.h
 	"function.h"
 
-1619945861 source:l:\c\qg\teamexam\笔记管理系统\main.c
+1619956296 source:l:\c\qg\teamexam\笔记管理系统\main.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
@@ -22,14 +22,14 @@
 	<string.h>
 	"IS.h"
 
-1619937536 source:l:\c\qg\teamexam\笔记管理系统\file_rw.c
+1619954297 source:l:\c\qg\teamexam\笔记管理系统\file_rw.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
 	"function.h"
 	"file_rw.h"
 
-1619856733 l:\c\qg\teamexam\笔记管理系统\function.h
+1619957063 l:\c\qg\teamexam\笔记管理系统\function.h
 
 1619937536 l:\c\qg\teamexam\笔记管理系统\file_rw.h
 	"IS.h"
@@ -48,14 +48,14 @@
 	"IS.h"
 	"function.h"
 
-1619937536 source:l:\c\qg\teamexam\笔记管理系统\layercreat.c
+1619955697 source:l:\c\qg\teamexam\笔记管理系统\layercreat.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
 	"function.h"
 	"file_rw.h"
 
-1619865942 source:l:\c\qg\teamexam\笔记管理系统\function.c
+1619955599 source:l:\c\qg\teamexam\笔记管理系统\function.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>

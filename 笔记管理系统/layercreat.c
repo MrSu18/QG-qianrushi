@@ -52,6 +52,7 @@ Status layercreat(FolderTreePtr base,char *dirname,char *filename)//创建整棵树
 
 		Queue_Out(&q);
 		FLAG--;
+
 		//准备给左孩子的数据，左孩子创建并且赋值之后入队
 		if(!feof(fp))
 		{
@@ -63,20 +64,26 @@ Status layercreat(FolderTreePtr base,char *dirname,char *filename)//创建整棵树
 							    ,temp.folder_tag[3].tag_node
 							    ,temp.folder_tag[4].tag_node);
 
+			if(strcmp(temp.folder_title,"pause")==0)
+			{
+				;
+			}
 
+			else
+			{
+				T->left=(FolderPtr)malloc(sizeof(Folder));
+				strcpy(T->left->folder_title,temp.folder_title);
+				strcpy(T->left->folder_tag[0].tag_node,temp.folder_tag[0].tag_node);
+				strcpy(T->left->folder_tag[1].tag_node,temp.folder_tag[1].tag_node);
+				strcpy(T->left->folder_tag[2].tag_node,temp.folder_tag[2].tag_node);
+				strcpy(T->left->folder_tag[3].tag_node,temp.folder_tag[3].tag_node);
+				strcpy(T->left->folder_tag[4].tag_node,temp.folder_tag[4].tag_node);
+				T->left->left=NULL;
+				T->left->right=NULL;
 
-			T->left=(FolderPtr)malloc(sizeof(Folder));
-			strcpy(T->left->folder_title,temp.folder_title);
-			strcpy(T->left->folder_tag[0].tag_node,temp.folder_tag[0].tag_node);
-			strcpy(T->left->folder_tag[1].tag_node,temp.folder_tag[1].tag_node);
-			strcpy(T->left->folder_tag[2].tag_node,temp.folder_tag[2].tag_node);
-			strcpy(T->left->folder_tag[3].tag_node,temp.folder_tag[3].tag_node);
-			strcpy(T->left->folder_tag[4].tag_node,temp.folder_tag[4].tag_node);
-			T->left->left=NULL;
-			T->left->right=NULL;
-
-			Queue_In(&q,T->left);
-			FLAG++;
+				Queue_In(&q,T->left);
+				FLAG++;
+			}
 		}
 		//同理创建右孩子，并且入队
 		if(!feof(fp))
@@ -89,18 +96,26 @@ Status layercreat(FolderTreePtr base,char *dirname,char *filename)//创建整棵树
 							    ,temp.folder_tag[4].tag_node);
 
 
-			T->right=(FolderPtr)malloc(sizeof(Folder));
-			strcpy(T->right->folder_title,temp.folder_title);
-			strcpy(T->right->folder_tag[0].tag_node,temp.folder_tag[0].tag_node);
-			strcpy(T->right->folder_tag[1].tag_node,temp.folder_tag[1].tag_node);
-			strcpy(T->right->folder_tag[2].tag_node,temp.folder_tag[2].tag_node);
-			strcpy(T->right->folder_tag[3].tag_node,temp.folder_tag[3].tag_node);
-			strcpy(T->right->folder_tag[4].tag_node,temp.folder_tag[4].tag_node);
-			T->right->left=NULL;
-			T->right->right=NULL;
+			if(strcmp(temp.folder_title,"pause")==0)
+			{
+				;
+			}
 
-			Queue_In(&q,T->right);
-			FLAG++;
+			else
+			{
+				T->right=(FolderPtr)malloc(sizeof(Folder));
+				strcpy(T->right->folder_title,temp.folder_title);
+				strcpy(T->right->folder_tag[0].tag_node,temp.folder_tag[0].tag_node);
+				strcpy(T->right->folder_tag[1].tag_node,temp.folder_tag[1].tag_node);
+				strcpy(T->right->folder_tag[2].tag_node,temp.folder_tag[2].tag_node);
+				strcpy(T->right->folder_tag[3].tag_node,temp.folder_tag[3].tag_node);
+				strcpy(T->right->folder_tag[4].tag_node,temp.folder_tag[4].tag_node);
+				T->right->left=NULL;
+				T->right->right=NULL;
+
+				Queue_In(&q,T->right);
+				FLAG++;
+			}
 		}
 	}
 	while(FLAG)

@@ -98,6 +98,17 @@ void fvisit(FolderPtr q,char *filename)//写入只要在在遍历中，把visit结点改成fvis
 
 Status S_filedir_w(FolderTreePtr F_T,char*dirtxt,char *filetxt, void (*fvisit)(FolderPtr q,char*filename))//对用户文件夹信息进行写入
 {
+	//给文件写入一个暂停标志
+	Folder pause;
+	strcpy(pause.folder_title,"pause\0");
+	strcpy(pause.folder_tag[0].tag_node,"stop\0");
+	strcpy(pause.folder_tag[1].tag_node,"stop\0");
+	strcpy(pause.folder_tag[2].tag_node,"stop\0");
+	strcpy(pause.folder_tag[3].tag_node,"stop\0");
+	strcpy(pause.folder_tag[4].tag_node,"stop\0");
+
+
+
 	LQueue* Q = NULL;
 	Queue_Init(&Q);
 	Queue_In(&Q, F_T->root);
@@ -116,9 +127,17 @@ Status S_filedir_w(FolderTreePtr F_T,char*dirtxt,char *filetxt, void (*fvisit)(F
 		{
 			Queue_In(&Q, node->left);
 		}
+		else
+		{
+			fvisit(&pause,dirtxt);
+		}
 		if (node->right)
 		{
 			Queue_In(&Q, node->right);
+		}
+		else
+		{
+			fvisit(&pause,dirtxt);
 		}
 	}
 	free(Q);
@@ -132,38 +151,42 @@ Status file_r(FILE *fp,FilePtr head)//对对应的文件名进行读取
 	File temp;
 	char pause[10]={'p','a','u','s','e','\0'};
 
-	fscanf(fp,"%s\t%s\t%s\t%s\t%s\t%s\n",temp.file_title
-						,temp.file_tag[0].tag_node
-						,temp.file_tag[1].tag_node
-						,temp.file_tag[2].tag_node
-						,temp.file_tag[3].tag_node
-						,temp.file_tag[4].tag_node);
-
-
-	while(strcmp(temp.file_title,pause)!=0)
+	if(!feof(fp))
 	{
-		FilePtr newnode = (FilePtr)malloc(sizeof(File));
-
-		strcpy(newnode->file_title,temp.file_title);
-		strcpy(newnode->file_tag[0].tag_node,temp.file_tag[0].tag_node);
-		strcpy(newnode->file_tag[1].tag_node,temp.file_tag[1].tag_node);
-		strcpy(newnode->file_tag[2].tag_node,temp.file_tag[2].tag_node);
-		strcpy(newnode->file_tag[3].tag_node,temp.file_tag[3].tag_node);
-		strcpy(newnode->file_tag[4].tag_node,temp.file_tag[4].tag_node);
-
-
 		fscanf(fp,"%s\t%s\t%s\t%s\t%s\t%s\n",temp.file_title
-						,temp.file_tag[0].tag_node
-						,temp.file_tag[1].tag_node
-						,temp.file_tag[2].tag_node
-						,temp.file_tag[3].tag_node
-						,temp.file_tag[4].tag_node);
+							,temp.file_tag[0].tag_node
+							,temp.file_tag[1].tag_node
+							,temp.file_tag[2].tag_node
+							,temp.file_tag[3].tag_node
+							,temp.file_tag[4].tag_node);
 
-		p->next=newnode;
-		p=newnode;
-		newnode->next=NULL;
+
+		while(strcmp(temp.file_title,pause)!=0)
+		{
+			FilePtr newnode = (FilePtr)malloc(sizeof(File));
+
+			strcpy(newnode->file_title,temp.file_title);
+			strcpy(newnode->file_tag[0].tag_node,temp.file_tag[0].tag_node);
+			strcpy(newnode->file_tag[1].tag_node,temp.file_tag[1].tag_node);
+			strcpy(newnode->file_tag[2].tag_node,temp.file_tag[2].tag_node);
+			strcpy(newnode->file_tag[3].tag_node,temp.file_tag[3].tag_node);
+			strcpy(newnode->file_tag[4].tag_node,temp.file_tag[4].tag_node);
+
+
+			fscanf(fp,"%s\t%s\t%s\t%s\t%s\t%s\n",temp.file_title
+							,temp.file_tag[0].tag_node
+							,temp.file_tag[1].tag_node
+							,temp.file_tag[2].tag_node
+							,temp.file_tag[3].tag_node
+							,temp.file_tag[4].tag_node);
+
+			p->next=newnode;
+			p=newnode;
+			newnode->next=NULL;
+		}
+		return TRUE;
 	}
-	return TRUE;
+	return ERROR;
 }
 
 Status file_w(FilePtr head,char *filetxt)//对文件名链表进行写入文本文件

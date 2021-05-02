@@ -83,6 +83,8 @@ typedef struct Lqueue
 } LQueue;
 
 
+Status printList(FilePtr p);
+
 
 //初始化队列
 Status Queue_Init(LQueue** q);

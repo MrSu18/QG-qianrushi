@@ -47,7 +47,11 @@ Status IS_(char *p)//IS<Â·¾¶>º¯Êý
 }
 Status IStrees(char *p,char *USERroot)
 {
-	system("tree /f");
+	char trueorder[150]={'c','d',' '};
+	strcat(trueorder,"");
+	strcat(trueorder,USERroot);
+	strcat(trueorder," && tree /f");
+	system(trueorder);
 	return TRUE;
 }
 Status ISgrep(char *p)

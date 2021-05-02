@@ -49,6 +49,7 @@ Status Tree_Traverse(FolderTreePtr F_T, void (*visit)(FolderPtr q))
 			continue;
 		}*/
 		visit(node);
+		printList(node->file_head);
 		Queue_Out(&Q);
 		if (node->left)
 		{
@@ -65,7 +66,7 @@ Status Tree_Traverse(FolderTreePtr F_T, void (*visit)(FolderPtr q))
 
 void visit (FolderPtr q)
 {
-	printf("%s\t%s\t%s\t%s\t%s\n"   ,q->folder_title
+	printf("%s\t%s\t%s\t%s\t%s\t%s\n"   ,q->folder_title
 					,q->folder_tag[0].tag_node
 					,q->folder_tag[1].tag_node
 					,q->folder_tag[2].tag_node
@@ -73,6 +74,25 @@ void visit (FolderPtr q)
 					,q->folder_tag[4].tag_node);
 	printf("\n\n");
 }
+
+Status printList(FilePtr p)
+{
+	 if (p == NULL) {
+		 return ERROR;
+	 }
+	FilePtr s = p->next;
+	while (s)
+	{
+		printf("文件名\t%s\t\n", s->file_title);
+		int i;
+		for (i = 0; i < 5; i++) {
+			printf("标签\t%s\n", s->file_tag[i].tag_node);
+		}
+		s = s->next;
+	}
+	return TRUE;
+}
+
 
 
 //功能队列

@@ -6,7 +6,7 @@
 //显示指令函数
 Status IS(char *p);//显示当前工作目录文件
 Status IS_(char *p);//IS<路径>函数
-Status IStrees(char *p);//IS-a函数
+Status IStrees(char *p,char *USERroot);//树形结构显示所有的文件夹和文件
 Status ISgrep(char *p);//搜索包含搜寻内容的文件
 //*******************************
 //删除文件函数

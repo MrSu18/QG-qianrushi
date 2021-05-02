@@ -7,22 +7,30 @@
 
 int main()
 {
-	/*char filename[17];
-	char s[24];
+	char dirname[17];
+	char filename[24];
 
-	strcpy(filename,"Áõ¿¥·«±Ê¼Ç.txt");
-	strcpy(s,"filename.txt");
+	strcpy(dirname,"Áõ¿¥·«±Ê¼Ç.txt");
+	strcpy(filename,"filename.txt");
 
 	FolderTreePtr base =(FolderTreePtr)malloc(sizeof(FolderTree));
 	base->root=(FolderPtr)malloc(sizeof(Folder));
-	layercreat(base,filename,s);
+	layercreat(base,dirname,filename);
 
-	//S_filedir_w(base,filename,s,fvisit);*/
+	Tree_Traverse(base,visit);
 
-	char instrction[50];
+
+	/*FILE*fp=fopen(dirname,"w");
+	fclose(fp);
+	fopen(filename,"w");
+	fclose(fp);
+
+	S_filedir_w(base,dirname,filename,fvisit);*/
+
+	/*char instrction[50];
 	gets(instrction);
 	chdir("L:\C\QG\teamexam");
-	ISgrep(instrction);
+	ISgrep(instrction);*/
 
 	return 0;
 }
