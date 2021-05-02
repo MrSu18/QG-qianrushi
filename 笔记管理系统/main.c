@@ -7,7 +7,7 @@
 
 int main()
 {
-	char filename[17];
+	/*char filename[17];
 	char s[24];
 
 	strcpy(filename,"Áõ¿¥·«±Ê¼Ç.txt");
@@ -17,7 +17,12 @@ int main()
 	base->root=(FolderPtr)malloc(sizeof(Folder));
 	layercreat(base,filename,s);
 
-	//S_filedir_w(base,filename,s,fvisit);
+	//S_filedir_w(base,filename,s,fvisit);*/
+
+	char instrction[50];
+	gets(instrction);
+	chdir("L:\C\QG\teamexam");
+	ISgrep(instrction);
 
 	return 0;
 }

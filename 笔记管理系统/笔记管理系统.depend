@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1619875598 source:l:\c\qg\teamexam\笔记管理系统\is.c
+1619947289 source:l:\c\qg\teamexam\笔记管理系统\is.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
@@ -8,7 +8,7 @@
 1619775155 l:\c\qg\teamexam\笔记管理系统\is.h
 	"function.h"
 
-1619936922 source:l:\c\qg\teamexam\笔记管理系统\main.c
+1619945861 source:l:\c\qg\teamexam\笔记管理系统\main.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
@@ -22,7 +22,7 @@
 	<string.h>
 	"IS.h"
 
-1619935753 source:l:\c\qg\teamexam\笔记管理系统\file_rw.c
+1619937536 source:l:\c\qg\teamexam\笔记管理系统\file_rw.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
@@ -48,7 +48,7 @@
 	"IS.h"
 	"function.h"
 
-1619936845 source:l:\c\qg\teamexam\笔记管理系统\layercreat.c
+1619937536 source:l:\c\qg\teamexam\笔记管理系统\layercreat.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
