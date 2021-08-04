@@ -1,0 +1,123 @@
+C51 COMPILER V9.05   LM4229                                                                06/04/2021 22:16:04 PAGE 1   
+
+
+C51 COMPILER V9.05, COMPILATION OF MODULE LM4229
+OBJECT MODULE PLACED IN LM4229.OBJ
+COMPILER INVOKED BY: L:\单片机\keil\KEIL4\C51\BIN\C51.EXE LM4229.c BROWSE DEBUG OBJECTEXTEND
+
+line level    source
+
+   1          #include <reg52.h>
+   2          #include <intrins.h>
+   3          #include "塔防游戏.h"
+   4          
+   5          void write_LCD_commond(uchar com)//对LCD写一个指令
+   6          {
+   7   1              C_E = 0;
+   8   1              C_D = 1;
+   9   1              R_D = 1;
+  10   1              LCD_data = com;
+  11   1              W_R = 0;// write
+  12   1              _nop_();
+  13   1              W_R = 1;// disable write
+  14   1              C_E = 1;
+  15   1              C_D = 0;
+  16   1      }
+  17          
+  18          void write_LCD_data(uchar dat)//对LCD写一个数据
+  19          {
+  20   1              C_E = 0;
+  21   1              C_D = 0;
+  22   1              R_D = 1;
+  23   1              LCD_data = dat;
+  24   1              W_R = 0;
+  25   1              _nop_();
+  26   1              W_R = 1;
+  27   1              C_E = 1;
+  28   1              C_D = 1;
+  29   1      }
+  30          
+  31          void write_LCD_dc(uchar com,uchar dat)//写一个数据和一个指令
+  32          {
+  33   1              write_LCD_data(dat);
+  34   1              write_LCD_commond(com);
+  35   1      }
+  36          
+  37          void write_LCD_ddc(uchar com,uchar dat1,uchar dat2)//写两个数据和一个指令
+  38          {
+  39   1              write_LCD_data(dat1);
+  40   1              write_LCD_data(dat2);
+  41   1              write_LCD_commond(com);
+  42   1      }
+  43          
+  44          void LM4229_init(void)//LCD初始化函数
+  45          {
+  46   1              REST = 0;
+  47   1              delay_ms(20);
+  48   1              REST = 1;
+  49   1              write_LCD_ddc(0x40,0x00,0x00);                          //设置文本显示区首地址
+  50   1              write_LCD_ddc(0x41,LcmLengthDots/8,0x00);       //设置文本显示区宽度
+  51   1              write_LCD_ddc(0x42,0x00,0x08);                          //设置图形显示区首地址0x08
+  52   1              write_LCD_ddc(0x43,LcmLengthDots/8,0x00);       //设置图形显示区宽度
+  53   1              write_LCD_commond(0xA7);                        //设置光标形状 8x8方块
+  54   1              write_LCD_commond(0x80);                        //显示方式设置 文本and图形(异或)
+  55   1              write_LCD_commond(0x92);                        //设置光标
+C51 COMPILER V9.05   LM4229                                                                06/04/2021 22:16:04 PAGE 2   
+
+  56   1              write_LCD_commond(0x9e);                        //显示开关设置 文本开,图形开,光标闪烁关
+  57   1      }
+  58          
+  59          void LM4229_clear(void)
+  60          {
+  61   1              uint i;
+  62   1              write_LCD_ddc(0x24,0x00,0x00);                  //置地址指针为从零开始
+  63   1              write_LCD_commond(0xb0);                        //自动写
+  64   1              for(i = 0;i < LcmLengthDots * LcmWidthDots ;i++)
+  65   1                      write_LCD_data(0x00);                   //清一屏
+  66   1              write_LCD_commond(0xb2);                        //自动写结束
+  67   1              write_LCD_ddc(0x24,0x00,0x00);                  //重置地址指针
+  68   1      }
+  69          
+  70          void dprintf(unsigned char *bmp_16,uint X_pos,uint Y_pos)
+  71          {
+  72   1              unsigned long int address;
+  73   1              unsigned char m,n;
+  74   1              m = 0;
+  75   1              address = LcmLengthDots / 8 * Y_pos + X_pos + 0x0800;
+  76   1              for(n = 0;n < 16;n++)                                           //计数值16
+  77   1              {
+  78   2                      write_LCD_ddc(0x24,(uchar)(address),(uchar)(address>>8));       //设置显示存储器地址
+  79   2                      write_LCD_dc(0xc0,bmp_16[m++]);                         //写入汉字字模左部
+  80   2                      write_LCD_dc(0xc0,bmp_16[m++]);                         //写入汉字字模右部
+  81   2                      address = address + LcmLengthDots/8;                    //修改显示存储器地址，显示下一列
+  82   2              }
+  83   1      }
+  84          
+  85           void charprintf(unsigned char *bmp_16,uint X_pos,uint Y_pos)
+  86          {
+  87   1              unsigned long int address;
+  88   1              unsigned char m,n;
+  89   1              m = 0;
+  90   1              address = LcmLengthDots / 8 * Y_pos + X_pos + 0x0800;
+  91   1              for(n = 0;n < 16;n++)                                           //计数值16
+  92   1              {
+  93   2                      write_LCD_ddc(0x24,(uchar)(address),(uchar)(address>>8));       //设置显示存储器地址
+  94   2                      write_LCD_dc(0xc0,bmp_16[m++]);                         //写入汉字字模左部
+  95   2      
+  96   2                      address = address + LcmLengthDots/8;                    //修改显示存储器地址，显示下一列
+  97   2              }
+  98   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    422    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----      26
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

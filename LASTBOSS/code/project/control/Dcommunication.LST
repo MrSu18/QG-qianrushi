@@ -1,0 +1,54 @@
+C51 COMPILER V9.05   DCOMMUNICATION                                                        05/24/2021 15:25:55 PAGE 1   
+
+
+C51 COMPILER V9.05, COMPILATION OF MODULE DCOMMUNICATION
+OBJECT MODULE PLACED IN Dcommunication.OBJ
+COMPILER INVOKED BY: L:\单片机\keil\KEIL4\C51\BIN\C51.EXE Dcommunication.c BROWSE DEBUG OBJECTEXTEND
+
+line level    source
+
+   1          #include<reg52.h>
+   2          #include"遥控器.h"
+   3          void send ()//发送键盘值
+   4          {
+   5   1              SBUF=send_data;
+   6   1              while(!TI); //TI发送中断标志位,等待数据发送完
+   7   1              TI=0;
+   8   1              send_data=0;//与接收同理发完就置0
+   9   1      }
+  10          void init()
+  11          {
+  12   1              TMOD=0x21;//设定T1定时器工作方式2
+  13   1              TH1=0xfd;
+  14   1              TL1=0xfd;//定时器TH1,TL1装初值
+  15   1              TR1=1;//启动T1计时器
+  16   1      
+  17   1              SM0=0;
+  18   1              SM1=1;//设置串口工作方式为1
+  19   1              REN=1;//打开接收端双工
+  20   1      
+  21   1              EA=1;//开总中断
+  22   1              ES=1;//开串口中断
+  23   1      }
+  24          void ser() interrupt 4//定时器中断
+  25          {
+  26   1              if(RI==1)
+  27   1              {
+  28   2                      RI=0;//接收中断标志位，接受到停止位的时候内部会置1，发起中断，所以要手动置0；
+  29   2                      receive_data=SBUF;
+  30   2              }
+  31   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     43    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

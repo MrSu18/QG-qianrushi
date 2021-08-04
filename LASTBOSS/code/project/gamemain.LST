@@ -1,0 +1,695 @@
+C51 COMPILER V9.05   GAMEMAIN                                                              06/04/2021 22:16:05 PAGE 1   
+
+
+C51 COMPILER V9.05, COMPILATION OF MODULE GAMEMAIN
+OBJECT MODULE PLACED IN gamemain.OBJ
+COMPILER INVOKED BY: L:\单片机\keil\KEIL4\C51\BIN\C51.EXE gamemain.c BROWSE DEBUG OBJECTEXTEND
+
+line level    source
+
+   1          #include <reg52.h>
+   2          #include <math.h>
+   3          #include "塔防游戏.h"
+   4          #include "tuxiangku.h"
+   5          
+   6          XY towerxy[10];//用于存储防御塔坐标的数组
+   7          Enemyxingxi D[10];//用于存储每个关卡敌人的信息
+   8          uchar idata guangqiachoose=0;//用来标记关卡
+   9          
+  10          uchar idata n=0;//用于记录塔的数量
+  11          uchar idata Dn=0;
+  12          
+  13          void meun(uchar flagchoose)
+  14          {
+  15   1              while(1)
+  16   1              {
+  17   2                      switch (receive_data)
+  18   2                      {
+  19   3                      case 'u':
+  20   3                              if(flagchoose==0)
+  21   3                              {
+  22   4                                      cachu(flagchoose);
+  23   4                                      flagchoose=2;
+  24   4                                      choosemenu(flagchoose);
+  25   4                              }
+  26   3                              else
+  27   3                              {
+  28   4                                      cachu(flagchoose);
+  29   4                                      flagchoose--;
+  30   4                                      choosemenu(flagchoose);
+  31   4                              }
+  32   3                              receive_data=0;
+  33   3                              break;
+  34   3                      case 'd':
+  35   3                              if(flagchoose==2)
+  36   3                              {
+  37   4                                      cachu(flagchoose);
+  38   4                                      flagchoose=0;
+  39   4                                      choosemenu(flagchoose);
+  40   4                              }
+  41   3                              else
+  42   3                              {
+  43   4                                      cachu(flagchoose);
+  44   4                                      flagchoose++;
+  45   4                                      choosemenu(flagchoose);
+  46   4                              }
+  47   3                              receive_data=0;
+  48   3                              break;
+  49   3                      case 'y':
+  50   3                              receive_data=0;
+  51   3                              switch(flagchoose)
+  52   3                              {
+  53   4                              case 0:
+  54   4                                      guangqiachoose=0;
+  55   4                                      switch(guangqiachoose)
+C51 COMPILER V9.05   GAMEMAIN                                                              06/04/2021 22:16:05 PAGE 2   
+
+  56   4                                      {
+  57   5                                      case 0:
+  58   5                                              buzzer_d();
+  59   5                                              diyiguang(flagchoose);
+  60   5                                      default:break;
+  61   5                                      }
+  62   4                                      case 1:
+  63   4                                              jixuyouxi();
+  64   4                                              xuanguang_meun(flagchoose);
+  65   4                                              break;
+  66   4                                      case 2:
+  67   4                                              paihanbang();
+  68   4                                              while(1)
+  69   4                                              {
+  70   5                                                      if(receive_data!=0)
+  71   5                                                      {
+  72   6                                                              receive_data=0;
+  73   6                                                              break;
+  74   6                                                      }
+  75   5                                              }
+  76   4                                              mainmeun();
+  77   4                                              meun(flagchoose);
+  78   4                                              break;
+  79   4                                      default:break;
+  80   4                              }
+  81   3                              receive_data=0;
+  82   3                              break;
+  83   3                      default:break;
+  84   3                      }
+  85   2              }
+  86   1      }
+  87          //***************************************************************
+  88          //第一关
+  89          void initfirstmove()//用于给第一关敌人的坐标HP赋值
+  90          {
+  91   1              direnx=4;
+  92   1              direny=56;
+  93   1              direnhp=3;
+  94   1      }
+  95          void firstmove()//第一关敌人运动轨迹，用在T0定时器中断
+  96          {
+  97   1              if(1<direnx&&direnx<16)
+  98   1              {
+  99   2                      direnx=direnx+2;
+ 100   2                      dprintf(clear,direnx-2,direny);//擦除影子
+ 101   2                      switch (direnhp)
+ 102   2                      {
+ 103   3                      case 3:
+ 104   3                              dprintf(enemy,direnx,direny);//显示敌人
+ 105   3                              break;
+ 106   3                      default:
+ 107   3                              dprintf(zhansunenemy,direnx,direny);//显示损伤后的敌人
+ 108   3                              break;
+ 109   3                      }
+ 110   2                      flag=0;
+ 111   2              }
+ 112   1              else
+ 113   1              {
+ 114   2                      if(1<direny&&direny<56+15)
+ 115   2                      {
+ 116   3                              direny=direny+15;
+ 117   3                              dprintf(clear,direnx,direny-15);//擦除影子
+C51 COMPILER V9.05   GAMEMAIN                                                              06/04/2021 22:16:05 PAGE 3   
+
+ 118   3                              switch (direnhp)
+ 119   3                              {
+ 120   4                              case 3:
+ 121   4                                      dprintf(enemy,direnx,direny);//显示敌人
+ 122   4                                      break;
+ 123   4                              default:
+ 124   4                                      dprintf(zhansunenemy,direnx,direny);//显示损伤后的敌人
+ 125   4                                      break;
+ 126   4                              }
+ 127   3                              flag=0;
+ 128   3                      }
+ 129   2                      else
+ 130   2                      {
+ 131   3                              if(1<direnx&&direnx<26)
+ 132   3                              {
+ 133   4                                      direnx=direnx+2;
+ 134   4                                      dprintf(clear,direnx-2,direny);//擦除影子
+ 135   4                                      switch (direnhp)
+ 136   4                                      {
+ 137   5                                      case 3:
+ 138   5                                              dprintf(enemy,direnx,direny);//显示敌人
+ 139   5                                              break;
+ 140   5                                      default:
+ 141   5                                              dprintf(zhansunenemy,direnx,direny);//显示损伤后的敌人
+ 142   5                                              break;
+ 143   5                                      }
+ 144   4                                      if(direnx==26)
+ 145   4                                      {
+ 146   5                                              HP--;
+ 147   5                                              dprintf(home,26,56+15);
+ 148   5                                      }
+ 149   4                                      flag=0;
+ 150   4                              }
+ 151   3                              else
+ 152   3                              {
+ 153   4                                      if(direnshuliang!=0)
+ 154   4                                      {
+ 155   5                                              direnshuliang--;//如果敌人成功到了最后说明这个敌人进入了基地，并且HP--
+ 156   5                                              initfirstmove();
+ 157   5                                              youxixinxi(direnshuliang,HP,jingbi/100,jingbi/10-(jingbi/100)*10,jingbi-(jingbi/100)*100-(jingbi/10)*
+             -10);
+ 158   5                                      }
+ 159   4                                      else
+ 160   4                                      {
+ 161   5                                              TR0=0;//停止定时器
+ 162   5                                              buzzer_d();//蜂鸣器鸣响表示游戏结束
+ 163   5                                              if(HP==0)
+ 164   5                                              {
+ 165   6                                                      write_LCD_commond(0x9c);//关闭光标闪烁
+ 166   6                                                      shibaijiemian();
+ 167   6                                                      jieshuflag=2;
+ 168   6                                              }
+ 169   5                                              else
+ 170   5                                              {
+ 171   6                                                      defen=defen+jingbi+HP*100;
+ 172   6                                                      chengongjiemian();
+ 173   6                                                      score[5]=defen;//将得分先保存在数组中游戏结束再写入EEPROM
+ 174   6                                                      write_LCD_commond(0x9c);//关闭光标闪烁
+ 175   6                                                      jieshuflag=1;
+ 176   6                                              }
+ 177   5      
+ 178   5                                      }
+C51 COMPILER V9.05   GAMEMAIN                                                              06/04/2021 22:16:05 PAGE 4   
+
+ 179   4                              }
+ 180   3                      }
+ 181   2              }
+ 182   1      }
+ 183          //***************************************************************************
+ 184          //第二关
+ 185          XY zuobiaochuli2_0(uchar guangbiaox,uchar guangbiaoy)
+ 186          {
+ 187   1              XY temp;
+ 188   1              temp.x=guangbiaox;
+ 189   1              temp.y=guangbiaoy/2*16;
+ 190   1              return temp;
+ 191   1      }
+ 192          
+ 193          void secondmove()//第二关敌人运动轨迹
+ 194          {
+ 195   1              uchar i=1;//因为后面那个方块会把前面那个方块的影子给扑灭，所以只需要擦除后面那个方块的影子就好,并且用一个
+             -I加switch就好
+ 196   1              if(Dn==0||Dn==2||Dn==4)
+ 197   1              {
+ 198   2                      D[Dn].n.x=D[Dn].n.x+2;
+ 199   2                      Dn++;
+ 200   2                      i=1;
+ 201   2              }
+ 202   1              else
+ 203   1              {
+ 204   2                      if(D[Dn-1].n.x<10&&D[Dn-1].n.y==16)
+ 205   2                      {
+ 206   3                              D[Dn-1].n.x=D[Dn-1].n.x+2;
+ 207   3                              D[Dn].n.x=D[Dn].n.x+2;
+ 208   3                              i=1;
+ 209   3                      }
+ 210   2                      else if(D[Dn-1].n.x==10&&D[Dn-1].n.y<5*16)
+ 211   2                      {
+ 212   3                              if(D[Dn].n.x<10)
+ 213   3                              {
+ 214   4                                      D[Dn].n.x=D[Dn].n.x+2;
+ 215   4                                      i=1;
+ 216   4                              }
+ 217   3                              else
+ 218   3                              {
+ 219   4                                      D[Dn].n.y=D[Dn].n.y+16;
+ 220   4                                      i=0;
+ 221   4                              }
+ 222   3                              D[Dn-1].n.y=D[Dn-1].n.y+16;
+ 223   3                      }
+ 224   2                      else if(D[Dn-1].n.y==5*16&&D[Dn-1].n.x>4)
+ 225   2                      {
+ 226   3                              if(D[Dn].n.y<5*16)
+ 227   3                              {
+ 228   4                                      D[Dn].n.y=D[Dn].n.y+16;
+ 229   4                                      i=0;
+ 230   4                              }
+ 231   3                              else
+ 232   3                              {
+ 233   4                                      D[Dn].n.x=D[Dn].n.x-2;
+ 234   4                                      i=2;
+ 235   4                              }
+ 236   3                              D[Dn-1].n.x=D[Dn-1].n.x-2;
+ 237   3                      }
+ 238   2                      else if(D[Dn-1].n.x==4&&D[Dn-1].n.y>=5*16&&D[Dn-1].n.y<7*16)//因为y是不断在升的，但是x会迂回，所以要多加
+             -个条件避免先执行了这一步
+C51 COMPILER V9.05   GAMEMAIN                                                              06/04/2021 22:16:05 PAGE 5   
+
+ 239   2                      {
+ 240   3                              if(D[Dn].n.x>4)
+ 241   3                              {
+ 242   4                                      D[Dn].n.x=D[Dn].n.x-2;
+ 243   4                                      i=2;
+ 244   4                              }
+ 245   3                              else
+ 246   3                              {
+ 247   4                                      D[Dn].n.y=D[Dn].n.y+16;
+ 248   4                                      i=0;
+ 249   4                              }
+ 250   3                              D[Dn-1].n.y=D[Dn-1].n.y+16;
+ 251   3                      }
+ 252   2                      else if(D[Dn-1].n.y==7*16&&D[Dn-1].n.x<12)
+ 253   2                      {
+ 254   3                              if(D[Dn].n.y<7*16)
+ 255   3                              {
+ 256   4                                      D[Dn].n.y=D[Dn].n.y+16;
+ 257   4                                      i=0;
+ 258   4                              }
+ 259   3                              else
+ 260   3                              {
+ 261   4                                      D[Dn].n.x=D[Dn].n.x+2;
+ 262   4                                      i=1;
+ 263   4                              }
+ 264   3                              D[Dn-1].n.x=D[Dn-1].n.x+2;
+ 265   3                      }
+ 266   2                      else if(D[Dn-1].n.y==0&&D[Dn-1].n.x==26)
+ 267   2                      {
+ 268   3                              dprintf(clear,D[Dn].n.x,D[Dn].n.y);
+ 269   3                              D[Dn].n.x=26;
+ 270   3                              D[Dn].n.y=0;
+ 271   3                              if(Dn<direnshuliang-1)
+ 272   3                              {
+ 273   4                                      Dn++;
+ 274   4                              }
+ 275   3                      }
+ 276   2              }
+ 277   1              switch(i)
+ 278   1              {
+ 279   2              case 0:
+ 280   2                      dprintf(clear,D[Dn].n.x,D[Dn].n.y-16);
+ 281   2                      dprintf(enemy,D[Dn].n.x,D[Dn].n.y);
+ 282   2                      dprintf(enemy,D[Dn-1].n.x,D[Dn-1].n.y);
+ 283   2                      break;
+ 284   2              case 1:
+ 285   2                      dprintf(clear,D[Dn].n.x-2,D[Dn].n.y);
+ 286   2                      dprintf(enemyhome,0,16);//防止擦除的时候把地方基地擦了
+ 287   2                      dprintf(enemy,D[Dn].n.x,D[Dn].n.y);
+ 288   2                      dprintf(enemy,D[Dn-1].n.x,D[Dn-1].n.y);
+ 289   2                      break;
+ 290   2              case 2:
+ 291   2                      dprintf(clear,D[Dn].n.x+2,D[Dn].n.y);
+ 292   2                      dprintf(enemy,D[Dn].n.x,D[Dn].n.y);
+ 293   2                      dprintf(enemy,D[Dn-1].n.x,D[Dn-1].n.y);
+ 294   2                      break;
+ 295   2              default:
+ 296   2                      break;
+ 297   2              }
+ 298   1              if(D[Dn-1].n.x==12&&D[Dn-1].n.y==16*7)
+ 299   1              {
+ 300   2                      dprintf(home,12,16*7);
+C51 COMPILER V9.05   GAMEMAIN                                                              06/04/2021 22:16:05 PAGE 6   
+
+ 301   2                      HP--;
+ 302   2      
+ 303   2                      judgeresult();
+ 304   2      
+ 305   2                      D[Dn-1].n.x=28;
+ 306   2                      D[Dn-1].n.y=0;//把进去之后的敌人给放出屏幕
+ 307   2                      if(D[Dn].n.x==10)
+ 308   2                              D[Dn].n.x=D[Dn].n.x+2;
+ 309   2              }
+ 310   1              else if(D[Dn].n.x==12&&D[Dn].n.y==16*7&&Dn<direnshuliang-1)
+ 311   1              {
+ 312   2                      dprintf(home,12,16*7);
+ 313   2                      HP--;
+ 314   2      
+ 315   2                      judgeresult();
+ 316   2      
+ 317   2                      D[Dn].n.x=28;
+ 318   2                      D[Dn].n.y=0;//把进去之后的敌人给放出屏幕
+ 319   2                      Dn++;
+ 320   2              }
+ 321   1              youxixinxi2_0(HP,Dn+1,jingbi);
+ 322   1      }
+ 323          
+ 324          void judgeresult()//判断成功还是失败的函数
+ 325          {
+ 326   1              if(HP==0)
+ 327   1              {
+ 328   2                      buzzer_d();//蜂鸣器鸣响表示游戏结束
+ 329   2      
+ 330   2                      youxixinxi2_0(HP,Dn+1,jingbi);
+ 331   2                      delay_ms(5);
+ 332   2                      LM4229_clear();
+ 333   2                      shibaijiemian();
+ 334   2                      TR0=0;
+ 335   2                      write_LCD_commond(0x9c);
+ 336   2                      jieshuflag=2;
+ 337   2              }
+ 338   1              else if((D[direnshuliang-1].n.x==28&&D[direnshuliang-1].n.y==0)||Dn==direnshuliang-1)//最后一个敌人如果也
+             -进入了墓地
+ 339   1              {
+ 340   2                      buzzer_d();//蜂鸣器鸣响表示游戏结束
+ 341   2      
+ 342   2                      defen=defen+HP*100+jingbi*10;
+ 343   2      
+ 344   2                      youxixinxi2_0(HP,Dn+1,jingbi);
+ 345   2                      delay_ms(5);
+ 346   2                      LM4229_clear();
+ 347   2                      chengongjiemian();
+ 348   2                      TR0=0;
+ 349   2                      write_LCD_commond(0x9c);
+ 350   2                      jieshuflag=1;
+ 351   2              }
+ 352   1      
+ 353   1      }
+ 354          
+ 355          //***************************************************************************
+ 356          //第三关
+ 357          void thirdmove()//第三关的敌人移动
+ 358          {
+ 359   1              if(D[Dn].n.x==3*x_1&&D[Dn].n.y<2*y_1)
+ 360   1              {
+ 361   2                      if(Dn==0||Dn==2||Dn==4)//给敌人数量数组的下标加一让它分批进行，Dn相当于一个开关
+C51 COMPILER V9.05   GAMEMAIN                                                              06/04/2021 22:16:05 PAGE 7   
+
+ 362   2                      {
+ 363   3                              Dn++;
+ 364   3                      }
+ 365   2      
+ 366   2                      D[Dn-1].n.y+=y_1;
+ 367   2                      D[Dn].n.y+=y_1;
+ 368   2      
+ 369   2                      dprintf(clear,3*x_1,D[Dn].n.y-y_1);
+ 370   2                      dprintf(enemyhome,3*x_1,0);
+ 371   2                      dprintf(enemy,3*x_1,D[Dn].n.y);
+ 372   2              }
+ 373   1              else
+ 374   1              {
+ 375   2                      if(D[Dn-1].n.y==2*y_1&&D[Dn-1].n.x>2*x_1)
+ 376   2                      {
+ 377   3                              dprintf(clear,D[Dn-1].n.x,D[Dn-1].n.y);
+ 378   3                              D[Dn-1].n.x-=x_1;
+ 379   3                              dprintf(enemy,D[Dn-1].n.x,D[Dn-1].n.y);
+ 380   3                      }
+ 381   2                      if(D[Dn].n.y==2*y_1&&D[Dn].n.x<4*x_1)
+ 382   2                      {
+ 383   3                              dprintf(clear,D[Dn].n.x,D[Dn].n.y);
+ 384   3                              D[Dn].n.x+=x_1;
+ 385   3                              dprintf(enemy,D[Dn].n.x,D[Dn].n.y);
+ 386   3                      }
+ 387   2                      else
+ 388   2                      {
+ 389   3                              if(D[Dn-1].n.y<5*y_1&&D[Dn-1].n.x==2*x_1)
+ 390   3                              {
+ 391   4                                      dprintf(clear,D[Dn-1].n.x,D[Dn-1].n.y);
+ 392   4                                      D[Dn-1].n.y+=y_1;
+ 393   4                                      dprintf(enemy,D[Dn-1].n.x,D[Dn-1].n.y);
+ 394   4                              }
+ 395   3                              if(D[Dn].n.y<5*y_1&&D[Dn].n.x==4*x_1)
+ 396   3                              {
+ 397   4                                      dprintf(clear,D[Dn].n.x,D[Dn].n.y);
+ 398   4                                      D[Dn].n.y+=y_1;
+ 399   4                                      dprintf(enemy,D[Dn].n.x,D[Dn].n.y);
+ 400   4                              }
+ 401   3                              else
+ 402   3                              {
+ 403   4                                      if(D[Dn-1].n.y==5*y_1&&D[Dn-1].n.x==2*x_1)
+ 404   4                                      {
+ 405   5                                              dprintf(clear,D[Dn-1].n.x,D[Dn-1].n.y);
+ 406   5                                              D[Dn-1].n.x+=x_1;
+ 407   5                                              dprintf(enemy,D[Dn-1].n.x,D[Dn-1].n.y);
+ 408   5                                      }
+ 409   4                                      if(D[Dn].n.y==5*y_1&&D[Dn].n.x==4*x_1)
+ 410   4                                      {
+ 411   5                                              dprintf(clear,D[Dn].n.x,D[Dn].n.y);
+ 412   5                                              D[Dn].n.x-=x_1;
+ 413   5                                              dprintf(enemy,D[Dn].n.x,D[Dn].n.y);
+ 414   5                                      }
+ 415   4                                      else
+ 416   4                                      {
+ 417   5                                              if(D[Dn-1].n.y<7*y_1&&D[Dn-1].n.x==3*x_1)
+ 418   5                                              {
+ 419   6                                                      dprintf(clear,D[Dn-1].n.x,D[Dn-1].n.y);
+ 420   6                                                      D[Dn-1].n.y+=y_1;
+ 421   6                                                      dprintf(enemy,D[Dn-1].n.x,D[Dn-1].n.y);
+ 422   6                                                      if(D[Dn-1].n.y==7*y_1&&D[Dn-1].n.x==3*x_1)
+ 423   6                                                      {
+C51 COMPILER V9.05   GAMEMAIN                                                              06/04/2021 22:16:05 PAGE 8   
+
+ 424   7                                                              D[Dn-1].n.y=0;
+ 425   7                                                              D[Dn-1].n.x=28;
+ 426   7      
+ 427   7                                                              HP--;
+ 428   7                                                              dprintf(zhansunenemy,28,0);
+ 429   7                                                              dprintf(home,3*x_1,7*y_1);
+ 430   7                                                              judgeresult();
+ 431   7                                                      }
+ 432   6                                              }
+ 433   5                                              if(D[Dn].n.y<7*y_1&&D[Dn].n.x==3*x_1)
+ 434   5                                              {
+ 435   6                                                      dprintf(clear,D[Dn].n.x,D[Dn].n.y);
+ 436   6                                                      D[Dn].n.y+=y_1;
+ 437   6                                                      dprintf(enemy,D[Dn].n.x,D[Dn].n.y);
+ 438   6                                                      if(D[Dn].n.y==7*y_1&&D[Dn].n.x==3*x_1)
+ 439   6                                                      {
+ 440   7                                                              D[Dn].n.y=0;
+ 441   7                                                              D[Dn].n.x=28;//将进入的方块放回墓地随后HP--
+ 442   7      
+ 443   7                                                              HP--;
+ 444   7                                                              dprintf(zhansunenemy,28,0);
+ 445   7                                                              dprintf(home,3*x_1,7*y_1);
+ 446   7                                                              judgeresult();
+ 447   7      
+ 448   7                                                              Dn++;//并且让Dn自增1，开启下一波
+ 449   7                                                      }
+ 450   6                                              }
+ 451   5                                      }
+ 452   4                              }
+ 453   3                      }
+ 454   2              }
+ 455   1              if((D[Dn].n.y==0&&D[Dn].n.x==26)&&Dn<direnshuliang)
+ 456   1              {
+ 457   2                      Dn++;
+ 458   2              }
+ 459   1              youxixinxi2_0(HP,Dn+1,jingbi);
+ 460   1      }
+ 461          //*******************************************************************************
+ 462          XY zuobiaochuli(uchar guangbiaox,uchar guangbiaoy)//坐标处理函数，用于换算光标坐标和防御塔坐标
+ 463          {
+ 464   1              XY temp;
+ 465   1              temp.x=guangbiaox;
+ 466   1              temp.y=guangbiaoy/2*((56-14)/3);
+ 467   1              return temp;
+ 468   1      }
+ 469          
+ 470          void gongjidir()//用于防御塔攻击敌人
+ 471          {
+ 472   1              uchar i,flag;
+ 473   1              for(i=0;i<=n;i++)
+ 474   1              {
+ 475   2                      if(sqrt((towerxy[i].x-direnx)^2+(towerxy[i].y-direny)^2)<sqrt(2^2+14^2)+1)
+ 476   2                      {
+ 477   3                              direnhp--;
+ 478   3                              dprintf(zhansunenemy,direnx,direny);
+ 479   3      
+ 480   3                      }
+ 481   2                      if(direnhp==0)
+ 482   2                      {
+ 483   3                              dprintf(clear,direnx,direny);
+ 484   3                              direnx=0;
+ 485   3                              direny=0;//敌人死亡之后擦除掉，并且将坐标置0；
+C51 COMPILER V9.05   GAMEMAIN                                                              06/04/2021 22:16:05 PAGE 9   
+
+ 486   3      
+ 487   3                              flag=1;//表示击败敌人要加钱
+ 488   3                      }
+ 489   2              }
+ 490   1              if(flag==1)
+ 491   1              {
+ 492   2                      jingbi=jingbi+10;
+ 493   2                      youxixinxi(direnshuliang,HP,jingbi/100,jingbi/10-(jingbi/100)*10,jingbi-(jingbi/100)*100-(jingbi/10)*10)
+             -;//信息修改之后要跟新一下信息
+ 494   2                      flag=0;//重新置0
+ 495   2              }
+ 496   1      }
+ 497          
+ 498          void gonjidir2_0()//改进之后的攻击敌人
+ 499          {
+ 500   1              uchar i,flag=0;
+ 501   1              for(i=0;i<=n;i++)
+ 502   1              {
+ 503   2                      if(sqrt((towerxy[i].x-D[Dn].n.x)^2+(towerxy[i].y-D[Dn].n.y)^2)<sqrt(2^2+14^2))
+ 504   2                      {
+ 505   3                              D[Dn].hp--;
+ 506   3                              dprintf(zhansunenemy,D[Dn].n.x,D[Dn].n.y);
+ 507   3                              if(D[Dn].hp==0)
+ 508   3                              {
+ 509   4                                      dprintf(clear,D[Dn].n.x,D[Dn].n.y);
+ 510   4                                      D[Dn].n.x=26;
+ 511   4                                      D[Dn].n.y=0;//敌人死亡之后擦除掉，并且将坐标置0；
+ 512   4      
+ 513   4                                      flag++;//表示击败敌人要加钱
+ 514   4                              }
+ 515   3                      }
+ 516   2                      if(sqrt((towerxy[i].x-D[Dn-1].n.x)^2+(towerxy[i].y-D[Dn-1].n.y)^2)<2*sqrt(2^2+14^2))
+ 517   2                      {
+ 518   3                              D[Dn-1].hp--;
+ 519   3                              dprintf(zhansunenemy,D[Dn-1].n.x,D[Dn-1].n.y);
+ 520   3                              if(D[Dn-1].hp==0)
+ 521   3                              {
+ 522   4                                      dprintf(clear,D[Dn-1].n.x,D[Dn-1].n.y);
+ 523   4                                      D[Dn-1].n.x=26;
+ 524   4                                      D[Dn-1].n.y=0;//敌人死亡之后擦除掉，并且将坐标置0；
+ 525   4      
+ 526   4                                      flag++;//表示击败敌人要加钱
+ 527   4                              }
+ 528   3                      }
+ 529   2      
+ 530   2              }
+ 531   1              if(flag!=0)
+ 532   1              {
+ 533   2                      jingbi=jingbi+flag*10;
+ 534   2                      youxixinxi2_0(HP,Dn,jingbi);//信息修改之后要跟新一下信息
+ 535   2                      flag=0;//重新置0
+ 536   2              }
+ 537   1      }
+ 538          
+ 539          void yaokon()//游戏开始后光标操作的函数
+ 540          {
+ 541   1              uchar score1,score2;
+ 542   1              while(1)
+ 543   1              {
+ 544   2                      write_LCD_commond(0x9f);//打开光标闪烁
+ 545   2                      write_LCD_ddc(0x21,guangbiaox,guangbiaoy);
+ 546   2                      switch (receive_data)
+C51 COMPILER V9.05   GAMEMAIN                                                              06/04/2021 22:16:05 PAGE 10  
+
+ 547   2                      {
+ 548   3                      case 'l':
+ 549   3                              receive_data=0;
+ 550   3                              if(guangbiaox==0)
+ 551   3                              {
+ 552   4                                      guangbiaox=12;
+ 553   4                              }
+ 554   3                              else
+ 555   3                              {
+ 556   4                                      guangbiaox=guangbiaox-2;
+ 557   4                              }
+ 558   3                              write_LCD_ddc(0x21,guangbiaox,guangbiaoy);
+ 559   3                              break;
+ 560   3                      case 'u':
+ 561   3                              receive_data=0;
+ 562   3                              if(guangbiaoy==0)
+ 563   3                              {
+ 564   4                                      guangbiaoy=14;
+ 565   4                              }
+ 566   3                              else
+ 567   3                              {
+ 568   4                                      guangbiaoy=guangbiaoy-2;
+ 569   4                              }
+ 570   3                              write_LCD_ddc(0x21,guangbiaox,guangbiaoy);
+ 571   3                              break;
+ 572   3                      case 'r':
+ 573   3                              receive_data=0;
+ 574   3                              if(guangbiaox==12)
+ 575   3                              {
+ 576   4                                      guangbiaox=0;
+ 577   4                              }
+ 578   3                              else
+ 579   3                              {
+ 580   4                                      guangbiaox=guangbiaox+2;
+ 581   4                              }
+ 582   3                              write_LCD_ddc(0x21,guangbiaox,guangbiaoy);
+ 583   3                              break;
+ 584   3                      case 'd':
+ 585   3                              receive_data=0;
+ 586   3                              if(guangbiaoy==14)
+ 587   3                              {
+ 588   4                                      guangbiaoy=0;
+ 589   4                              }
+ 590   3                              else
+ 591   3                              {
+ 592   4                                      guangbiaoy=guangbiaoy+2;
+ 593   4                              }
+ 594   3                              write_LCD_ddc(0x21,guangbiaox,guangbiaoy);
+ 595   3                              break;
+ 596   3                      case 'y':
+ 597   3                              receive_data=0;
+ 598   3                              if(jingbi>=10)
+ 599   3                              {
+ 600   4                                      towerxy[n]=zuobiaochuli2_0(guangbiaox,guangbiaoy);
+ 601   4                                      dprintf(tower,towerxy[n].x,towerxy[n].y);
+ 602   4                                      n++;
+ 603   4                                      jingbi=jingbi-10;
+ 604   4      
+ 605   4                                      youxixinxi2_0(HP,Dn,jingbi);
+ 606   4                              }
+ 607   3                              break;
+ 608   3                      }
+C51 COMPILER V9.05   GAMEMAIN                                                              06/04/2021 22:16:05 PAGE 11  
+
+ 609   2                      if(jieshuflag==2)
+ 610   2                      {
+ 611   3                              jieshuflag=0;
+ 612   3                              while(1)
+ 613   3                              {
+ 614   4                                      if(receive_data!=0)
+ 615   4                                      {
+ 616   5                                              receive_data=0;
+ 617   5                                              mainmeun();
+ 618   5                                              choosemenu(0);
+ 619   5                                              meun(flagchoose);
+ 620   5                                      }
+ 621   4                              }
+ 622   3                      }
+ 623   2                      else if(jieshuflag==1)
+ 624   2                      {
+ 625   3                              jieshuflag=0;//记得要即使清0否则会直接结束游戏
+ 626   3                              score1=defen/100;
+ 627   3                              score2=defen%100;
+ 628   3                              while(1)
+ 629   3                              {
+ 630   4                                      tubedisplay(score1/10,score1%10,score2/10,0);
+ 631   4                                      switch(receive_data)
+ 632   4                                      {
+ 633   5                                      case 'y':
+ 634   5                                              receive_data=0;
+ 635   5                                              guangqiachoose++;
+ 636   5                                              selectguangqia(flagchoose);
+ 637   5                                      case 'n':
+ 638   5                                              receive_data=0;
+ 639   5                                              mainmeun();
+ 640   5                                              choosemenu(0);
+ 641   5                                              Weeprom();
+ 642   5                                              meun(flagchoose);
+ 643   5                                      }
+ 644   4                              }
+ 645   3                      }
+ 646   2              }
+ 647   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =   4359    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =     50      12
+   IDATA SIZE       =      3    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

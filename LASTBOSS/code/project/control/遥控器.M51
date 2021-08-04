@@ -1,0 +1,387 @@
+BL51 BANKED LINKER/LOCATER V6.22                                                        05/24/2021  15:25:55  PAGE 1
+
+
+BL51 BANKED LINKER/LOCATER V6.22, INVOKED BY:
+L:\µ¥Æ¬»ú\KEIL\KEIL4\C51\BIN\BL51.EXE STARTUP.obj, Ò£¿ØÆ÷.obj, yaokongqimain.obj, Dcommunication.obj, .\Ìì¿ÕÖ®³Ç.obj TO 
+>> Ò£¿ØÆ÷ RAMSIZE (256)
+
+
+MEMORY MODEL: SMALL
+
+
+INPUT MODULES INCLUDED:
+  STARTUP.obj (?C_STARTUP)
+  Ò£¿ØÆ÷.obj (______)
+  yaokongqimain.obj (YAOKONGQIMAIN)
+  Dcommunication.obj (DCOMMUNICATION)
+  .\Ìì¿ÕÖ®³Ç.obj (________)
+  L:\µ¥Æ¬»ú\KEIL\KEIL4\C51\LIB\C51S.LIB (?C_INIT)
+  L:\µ¥Æ¬»ú\KEIL\KEIL4\C51\LIB\C51S.LIB (?C?ULCMP)
+
+
+LINK MAP OF MODULE:  Ò£¿ØÆ÷ (?C_STARTUP)
+
+
+            TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
+            -----------------------------------------------------
+
+            * * * * * * *   D A T A   M E M O R Y   * * * * * * *
+            REG     0000H     0008H     ABSOLUTE     "REG BANK 0"
+            DATA    0008H     0006H     UNIT         ?DT?_DELAY?________
+            DATA    000EH     0003H     UNIT         ?DT?________
+            DATA    0011H     0002H     UNIT         ?DT?YAOKONGQIMAIN
+            DATA    0013H     0002H     UNIT         ?DT?BOFANGYINGYUE?________
+            IDATA   0015H     0001H     UNIT         ?STACK
+
+            * * * * * * *   C O D E   M E M O R Y   * * * * * * *
+            CODE    0000H     0003H     ABSOLUTE     
+            CODE    0003H     0007H     UNIT         ?C_INITSEG
+                    000AH     0001H                  *** GAP ***
+            CODE    000BH     0003H     ABSOLUTE     
+            CODE    000EH     0011H     UNIT         ?PR?MAIN?YAOKONGQIMAIN
+                    001FH     0004H                  *** GAP ***
+            CODE    0023H     0003H     ABSOLUTE     
+            CODE    0026H     01C7H     UNIT         ?CO?________
+            CODE    01EDH     008CH     UNIT         ?C_C51STARTUP
+            CODE    0279H     0050H     UNIT         ?PR?MATRIXKEYSCAN?______
+            CODE    02C9H     0048H     UNIT         ?PR?_DELAY?________
+            CODE    0311H     0041H     UNIT         ?PR?BOFANGYINGYUE?________
+            CODE    0352H     0020H     UNIT         ?PR?_DELAY_MS?YAOKONGQIMAIN
+            CODE    0372H     0016H     UNIT         ?PR?INIT?DCOMMUNICATION
+            CODE    0388H     0011H     UNIT         ?C?LIB_CODE
+            CODE    0399H     000DH     UNIT         ?PR?T0INT?________
+            CODE    03A6H     000DH     UNIT         ?PR?SONG?________
+            CODE    03B3H     000CH     UNIT         ?PR?SEND?DCOMMUNICATION
+            CODE    03BFH     0009H     UNIT         ?PR?SER?DCOMMUNICATION
+
+
+
+OVERLAY MAP OF MODULE:   Ò£¿ØÆ÷ (?C_STARTUP)
+
+
+BL51 BANKED LINKER/LOCATER V6.22                                                      05/24/2021  15:25:55  PAGE 2
+
+
+SEGMENT
+  +--> CALLED SEGMENT
+---------------------
+?C_C51STARTUP
+  +--> ?PR?MAIN?YAOKONGQIMAIN
+  +--> ?C_INITSEG
+
+?PR?MAIN?YAOKONGQIMAIN
+  +--> ?PR?INIT?DCOMMUNICATION
+  +--> ?PR?_DELAY_MS?YAOKONGQIMAIN
+  +--> ?PR?MATRIXKEYSCAN?______
+
+?PR?MATRIXKEYSCAN?______
+  +--> ?PR?SEND?DCOMMUNICATION
+
+
+
+SYMBOL TABLE OF MODULE:  Ò£¿ØÆ÷ (?C_STARTUP)
+
+  VALUE           TYPE          NAME
+  ----------------------------------
+
+  -------         MODULE        ?C_STARTUP
+  C:01EDH         SEGMENT       ?C_C51STARTUP
+  I:0015H         SEGMENT       ?STACK
+  C:0000H         PUBLIC        ?C_STARTUP
+  D:00E0H         SYMBOL        ACC
+  D:00F0H         SYMBOL        B
+  D:0083H         SYMBOL        DPH
+  D:0082H         SYMBOL        DPL
+  N:0000H         SYMBOL        IBPSTACK
+  N:0100H         SYMBOL        IBPSTACKTOP
+  N:0080H         SYMBOL        IDATALEN
+  C:01F0H         SYMBOL        IDATALOOP
+  N:0000H         SYMBOL        PBPSTACK
+  N:0100H         SYMBOL        PBPSTACKTOP
+  N:0000H         SYMBOL        PDATALEN
+  N:0000H         SYMBOL        PDATASTART
+  N:0000H         SYMBOL        PPAGE
+  N:0000H         SYMBOL        PPAGEENABLE
+  D:00A0H         SYMBOL        PPAGE_SFR
+  D:0081H         SYMBOL        SP
+  C:01EDH         SYMBOL        STARTUP1
+  N:0000H         SYMBOL        XBPSTACK
+  N:0000H         SYMBOL        XBPSTACKTOP
+  N:0000H         SYMBOL        XDATALEN
+  N:0000H         SYMBOL        XDATASTART
+  C:0000H         LINE#         126
+  C:01EDH         LINE#         133
+  C:01EFH         LINE#         134
+  C:01F0H         LINE#         135
+  C:01F1H         LINE#         136
+  C:01F3H         LINE#         185
+  C:01F6H         LINE#         196
+  -------         ENDMOD        ?C_STARTUP
+
+  -------         MODULE        ______
+BL51 BANKED LINKER/LOCATER V6.22                                                      05/24/2021  15:25:55  PAGE 3
+
+
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0090H         PUBLIC        P1
+  D:00A0H         PUBLIC        P2
+  D:00B0H         PUBLIC        P3
+  C:0279H         PUBLIC        matrixkeyscan
+  D:00A8H         PUBLIC        IE
+  D:00B8H         PUBLIC        IP
+  D:0098H         PUBLIC        SCON
+  D:0088H         PUBLIC        TCON
+  D:00C8H         PUBLIC        T2CON
+  D:00D0H         PUBLIC        PSW
+  -------         PROC          MATRIXKEYSCAN
+  -------         DO            
+  D:0007H         SYMBOL        temp
+  -------         ENDDO         
+  C:0279H         LINE#         3
+  C:0279H         LINE#         4
+  C:0279H         LINE#         6
+  C:027BH         LINE#         7
+  C:0280H         LINE#         8
+  C:0280H         LINE#         9
+  C:0285H         LINE#         10
+  C:02A1H         LINE#         11
+  C:02A1H         LINE#         12
+  C:02A1H         LINE#         13
+  C:02A4H         LINE#         14
+  C:02A4H         LINE#         15
+  C:02A4H         LINE#         16
+  C:02A6H         LINE#         17
+  C:02A6H         LINE#         18
+  C:02A9H         LINE#         19
+  C:02A9H         LINE#         20
+  C:02A9H         LINE#         21
+  C:02ABH         LINE#         22
+  C:02ABH         LINE#         23
+  C:02AEH         LINE#         24
+  C:02AEH         LINE#         25
+  C:02AEH         LINE#         26
+  C:02B0H         LINE#         27
+  C:02B0H         LINE#         28
+  C:02B3H         LINE#         29
+  C:02B3H         LINE#         30
+  C:02B3H         LINE#         31
+  C:02B5H         LINE#         32
+  C:02B5H         LINE#         33
+  C:02B8H         LINE#         34
+  C:02B8H         LINE#         35
+  C:02B8H         LINE#         36
+  C:02BAH         LINE#         37
+  C:02BAH         LINE#         38
+  C:02BDH         LINE#         39
+  C:02BDH         LINE#         40
+  C:02BDH         LINE#         41
+  C:02BFH         LINE#         42
+  C:02BFH         LINE#         43
+  C:02C2H         LINE#         44
+  C:02C5H         LINE#         45
+BL51 BANKED LINKER/LOCATER V6.22                                                      05/24/2021  15:25:55  PAGE 4
+
+
+  C:02C8H         LINE#         46
+  C:02C8H         LINE#         47
+  C:02C8H         LINE#         48
+  C:02C8H         LINE#         49
+  C:02C8H         LINE#         50
+  -------         ENDPROC       MATRIXKEYSCAN
+  -------         ENDMOD        ______
+
+  -------         MODULE        YAOKONGQIMAIN
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0090H         PUBLIC        P1
+  D:00B0H         PUBLIC        P3
+  D:00A8H         PUBLIC        IE
+  D:00B8H         PUBLIC        IP
+  C:000EH         PUBLIC        main
+  D:0011H         PUBLIC        send_data
+  D:0098H         PUBLIC        SCON
+  D:0088H         PUBLIC        TCON
+  B:00A8H.1       PUBLIC        ET0
+  C:0352H         PUBLIC        _delay_ms
+  D:0012H         PUBLIC        receive_data
+  D:00C8H         PUBLIC        T2CON
+  D:00D0H         PUBLIC        PSW
+  -------         PROC          _DELAY_MS
+  D:0006H         SYMBOL        i
+  -------         DO            
+  D:0004H         SYMBOL        x
+  D:0002H         SYMBOL        y
+  -------         ENDDO         
+  C:0352H         LINE#         8
+  C:0352H         LINE#         9
+  C:0352H         LINE#         11
+  C:035CH         LINE#         12
+  C:035FH         LINE#         13
+  C:035FH         LINE#         15
+  C:0371H         LINE#         16
+  -------         ENDPROC       _DELAY_MS
+  -------         PROC          MAIN
+  C:000EH         LINE#         17
+  C:000EH         LINE#         18
+  C:000EH         LINE#         19
+  C:0011H         LINE#         20
+  C:0013H         LINE#         21
+  C:001AH         LINE#         23
+  C:001AH         LINE#         24
+  C:001AH         LINE#         25
+  C:001DH         LINE#         26
+  -------         ENDPROC       MAIN
+  -------         ENDMOD        YAOKONGQIMAIN
+
+  -------         MODULE        DCOMMUNICATION
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0090H         PUBLIC        P1
+  D:00B0H         PUBLIC        P3
+  B:00A8H.7       PUBLIC        EA
+  D:00A8H         PUBLIC        IE
+  B:00A8H.4       PUBLIC        ES
+BL51 BANKED LINKER/LOCATER V6.22                                                      05/24/2021  15:25:55  PAGE 5
+
+
+  D:00B8H         PUBLIC        IP
+  B:0098H.0       PUBLIC        RI
+  B:0098H.1       PUBLIC        TI
+  C:03B3H         PUBLIC        send
+  D:0099H         PUBLIC        SBUF
+  D:0098H         PUBLIC        SCON
+  D:0089H         PUBLIC        TMOD
+  D:0088H         PUBLIC        TCON
+  C:0372H         PUBLIC        init
+  C:03BFH         PUBLIC        ser
+  D:008DH         PUBLIC        TH1
+  B:0098H.7       PUBLIC        SM0
+  B:0098H.6       PUBLIC        SM1
+  D:008BH         PUBLIC        TL1
+  B:0088H.6       PUBLIC        TR1
+  B:0098H.4       PUBLIC        REN
+  D:00C8H         PUBLIC        T2CON
+  D:00D0H         PUBLIC        PSW
+  -------         PROC          SEND
+  C:03B3H         LINE#         3
+  C:03B3H         LINE#         4
+  C:03B3H         LINE#         5
+  C:03B6H         LINE#         6
+  C:03B9H         LINE#         7
+  C:03BBH         LINE#         8
+  C:03BEH         LINE#         9
+  -------         ENDPROC       SEND
+  -------         PROC          INIT
+  C:0372H         LINE#         10
+  C:0372H         LINE#         11
+  C:0372H         LINE#         12
+  C:0375H         LINE#         13
+  C:0378H         LINE#         14
+  C:037BH         LINE#         15
+  C:037DH         LINE#         17
+  C:037FH         LINE#         18
+  C:0381H         LINE#         19
+  C:0383H         LINE#         21
+  C:0385H         LINE#         22
+  C:0387H         LINE#         23
+  -------         ENDPROC       INIT
+  -------         PROC          SER
+  C:03BFH         LINE#         24
+  C:03BFH         LINE#         26
+  C:03C2H         LINE#         27
+  C:03C2H         LINE#         28
+  C:03C4H         LINE#         29
+  C:03C7H         LINE#         30
+  C:03C7H         LINE#         31
+  -------         ENDPROC       SER
+  -------         ENDMOD        DCOMMUNICATION
+
+  -------         MODULE        ________
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  C:0311H         PUBLIC        bofangyingyue
+  D:0090H         PUBLIC        P1
+  D:00B0H         PUBLIC        P3
+BL51 BANKED LINKER/LOCATER V6.22                                                      05/24/2021  15:25:55  PAGE 6
+
+
+  D:00A8H         PUBLIC        IE
+  C:02C9H         PUBLIC        _delay
+  D:00B8H         PUBLIC        IP
+  C:005EH         PUBLIC        sszymmh
+  D:000EH         PUBLIC        time
+  D:0098H         PUBLIC        SCON
+  D:0088H         PUBLIC        TCON
+  C:03A6H         PUBLIC        song
+  D:000FH         PUBLIC        timer0h
+  D:0010H         PUBLIC        timer0l
+  D:008CH         PUBLIC        TH0
+  D:008AH         PUBLIC        TL0
+  B:0088H.4       PUBLIC        TR0
+  D:00C8H         PUBLIC        T2CON
+  B:0090H.0       PUBLIC        speaker
+  C:0399H         PUBLIC        t0int
+  C:0026H         PUBLIC        FREQH
+  D:00D0H         PUBLIC        PSW
+  C:0042H         PUBLIC        FREQL
+  -------         PROC          T0INT
+  C:0399H         LINE#         62
+  C:0399H         LINE#         64
+  C:039BH         LINE#         65
+  C:039DH         LINE#         66
+  C:03A0H         LINE#         67
+  C:03A3H         LINE#         68
+  C:03A5H         LINE#         69
+  -------         ENDPROC       T0INT
+  -------         PROC          _DELAY
+  D:0008H         SYMBOL        t
+  -------         DO            
+  D:0009H         SYMBOL        t1
+  D:000AH         SYMBOL        t2
+  -------         ENDDO         
+  C:02C9H         LINE#         71
+  C:02CBH         LINE#         72
+  C:02CBH         LINE#         75
+  C:02D5H         LINE#         76
+  C:030EH         LINE#         77
+  C:0310H         LINE#         78
+  -------         ENDPROC       _DELAY
+  -------         PROC          SONG
+  C:03A6H         LINE#         80
+  C:03A6H         LINE#         81
+  C:03A6H         LINE#         82
+  C:03A9H         LINE#         83
+  C:03ACH         LINE#         84
+  C:03AEH         LINE#         85
+  -------         ENDPROC       SONG
+  -------         PROC          BOFANGYINGYUE
+  -------         DO            
+  D:0013H         SYMBOL        k
+  D:0014H         SYMBOL        i
+  -------         ENDDO         
+  C:0311H         LINE#         88
+  C:0311H         LINE#         89
+  C:0311H         LINE#         97
+BL51 BANKED LINKER/LOCATER V6.22                                                      05/24/2021  15:25:55  PAGE 7
+
+
+  C:0314H         LINE#         98
+  C:0317H         LINE#         99
+  C:031BH         LINE#         100
+  C:031BH         LINE#         101
+  C:0330H         LINE#         103
+  C:0336H         LINE#         104
+  C:033EH         LINE#         105
+  C:0346H         LINE#         106
+  C:034CH         LINE#         107
+  C:034FH         LINE#         108
+  C:0351H         LINE#         109
+  -------         ENDPROC       BOFANGYINGYUE
+  -------         ENDMOD        ________
+
+  -------         MODULE        ?C?ULCMP
+  C:0388H         PUBLIC        ?C?ULCMP
+  -------         ENDMOD        ?C?ULCMP
+
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?BOFANGYINGYUE?________
+
+Program Size: data=22.0 xdata=0 code=963
+LINK/LOCATE RUN COMPLETE.  1 WARNING(S),  0 ERROR(S)

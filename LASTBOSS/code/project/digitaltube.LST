@@ -1,0 +1,50 @@
+C51 COMPILER V9.05   DIGITALTUBE                                                           06/04/2021 22:16:04 PAGE 1   
+
+
+C51 COMPILER V9.05, COMPILATION OF MODULE DIGITALTUBE
+OBJECT MODULE PLACED IN digitaltube.OBJ
+COMPILER INVOKED BY: L:\单片机\keil\KEIL4\C51\BIN\C51.EXE digitaltube.c BROWSE DEBUG OBJECTEXTEND
+
+line level    source
+
+   1          #include <reg52.h>
+   2          #include "塔防游戏.h"
+   3          
+   4          unsigned char code duanxuan[] ={0xc0,0xf9,0xa4,0xb0,0x99,0x92,0x82,0xf8,0x80,0x90};
+   5          
+   6          void tubedisplay(uint qian,uint bai,uint shi,uint ge)//数码管段选函数
+   7          {
+   8   1              qianwei=1;
+   9   1              digitaltube=duanxuan[qian];
+  10   1              digitaltube=0xff;
+  11   1              qianwei=0;
+  12   1      
+  13   1              baiwei=1;
+  14   1              digitaltube=duanxuan[bai];
+  15   1              digitaltube=0xff;
+  16   1              baiwei=0;
+  17   1      
+  18   1              shiwei=1;
+  19   1              digitaltube=duanxuan[shi];
+  20   1              digitaltube=0xff;
+  21   1              shiwei=0;
+  22   1      
+  23   1              gewei=1;
+  24   1              digitaltube=duanxuan[ge];
+  25   1              digitaltube=0xff;
+  26   1              gewei=0;
+  27   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     49    ----
+   CONSTANT SIZE    =     10    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----       8
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

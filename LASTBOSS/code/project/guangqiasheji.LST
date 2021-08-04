@@ -1,0 +1,183 @@
+C51 COMPILER V9.05   GUANGQIASHEJI                                                         06/04/2021 22:16:05 PAGE 1   
+
+
+C51 COMPILER V9.05, COMPILATION OF MODULE GUANGQIASHEJI
+OBJECT MODULE PLACED IN guangqiasheji.OBJ
+COMPILER INVOKED BY: L:\单片机\keil\KEIL4\C51\BIN\C51.EXE guangqiasheji.c BROWSE DEBUG OBJECTEXTEND
+
+line level    source
+
+   1          #include <reg52.h>
+   2          #include <math.h>
+   3          #include "塔防游戏.h"
+   4          #include "tuxiangku.h"
+   5          
+   6          extern XY towerxy[];//用于存储防御塔坐标的数组
+   7          extern Enemyxingxi D[];//用于存储每个关卡敌人的信息
+   8          extern uchar idata guangqiachoose;//用来标记关卡
+   9          
+  10          extern uchar idata n;//用于记录塔的数量
+  11          
+  12          void diyiguang(uchar flagchoose)//第一关总的接口函数
+  13          {
+  14   1              uchar defenqian;
+  15   1              uchar defenbai;
+  16   1              uchar defenshi;
+  17   1              first();
+  18   1              youxixinxi(direnshuliang,HP,1,0,0);
+  19   1              while(1)
+  20   1              {
+  21   2                      write_LCD_commond(0x9f);//打开光标闪烁
+  22   2                      write_LCD_ddc(0x21,guangbiaox,guangbiaoy);
+  23   2                      switch (receive_data)
+  24   2                      {
+  25   3                      case 'l':
+  26   3                              guangbiaox=guangbiaox-2;
+  27   3                              write_LCD_ddc(0x21,guangbiaox,guangbiaoy);
+  28   3                              receive_data=0;
+  29   3                              break;
+  30   3                      case 'u':
+  31   3                              guangbiaoy=guangbiaoy-3;
+  32   3                              write_LCD_ddc(0x21,guangbiaox,guangbiaoy);
+  33   3                              receive_data=0;
+  34   3                              break;
+  35   3                      case 'r':
+  36   3                              guangbiaox=guangbiaox+2;
+  37   3                              write_LCD_ddc(0x21,guangbiaox,guangbiaoy);
+  38   3                              receive_data=0;
+  39   3                              break;
+  40   3                      case 'd':
+  41   3                              guangbiaoy=guangbiaoy+2;
+  42   3                              write_LCD_ddc(0x21,guangbiaox,guangbiaoy);
+  43   3                              receive_data=0;
+  44   3                              break;
+  45   3                      case 'y':
+  46   3                              if(jingbi>=10)
+  47   3                              {
+  48   4                                      towerxy[n]=zuobiaochuli(guangbiaox,guangbiaoy);
+  49   4                                      dprintf(tower,towerxy[n].x,towerxy[n].y);
+  50   4                                      n++;
+  51   4                                      jingbi=jingbi-10;
+  52   4                                      receive_data=0;
+  53   4                                      youxixinxi(direnshuliang,HP,jingbi/100,jingbi/10-(jingbi/100)*10,jingbi-(jingbi/100)*100-(jingbi/10)*1
+             -0);
+  54   4                              }
+C51 COMPILER V9.05   GUANGQIASHEJI                                                         06/04/2021 22:16:05 PAGE 2   
+
+  55   3                              break;
+  56   3                      }
+  57   2                      if(jieshuflag==1)
+  58   2                      {
+  59   3                              jieshuflag=0;
+  60   3      
+  61   3                              defenqian=defen/1000;
+  62   3                              defenbai=defen/100-(defen/1000)*10;
+  63   3                              defenshi=defen/10-(defen/100)*10;
+  64   3                              while(1)
+  65   3                              {
+  66   4                                      tubedisplay(defenqian,defenbai,defenshi,0);
+  67   4                                      switch(receive_data)
+  68   4                                      {
+  69   5                                      case 'y':
+  70   5                                              receive_data=0;
+  71   5                                              guangqiachoose++;
+  72   5                                              selectguangqia(flagchoose);
+  73   5                                              break;
+  74   5                                      case 'n':
+  75   5                                              receive_data=0;
+  76   5      
+  77   5                                              Weeprom();//游戏成功，更新排行榜
+  78   5      
+  79   5                                              mainmeun();
+  80   5                                              choosemenu(0);
+  81   5                                              meun(flagchoose);
+  82   5                                              break;
+  83   5                                      }
+  84   4                              }
+  85   3                      }
+  86   2                      else if(jieshuflag==2)
+  87   2                      {
+  88   3                              jieshuflag=0;
+  89   3      
+  90   3                              while(!receive_data) ;//判断用户是否按下按键，按下之后就才返回主菜单
+  91   3                              receive_data=0;//把接收到的信号置0，放置下次使用
+  92   3      
+  93   3                              mainmeun();
+  94   3                              choosemenu(0);
+  95   3                              meun(flagchoose);
+  96   3                      }
+  97   2              }
+  98   1      }
+  99          
+ 100          void dierguang()
+ 101          {
+ 102   1              uchar i;
+ 103   1      
+ 104   1              //初始化一下游戏信息
+ 105   1              guangbiaox=2;
+ 106   1              guangbiaoy=0;
+ 107   1              jingbi=120;
+ 108   1              Dn=0;
+ 109   1              direnshuliang=6;
+ 110   1              for(i=0;i<10;i++)
+ 111   1              {
+ 112   2                      D[i].hp=3;
+ 113   2                      D[i].n.x=2;
+ 114   2                      D[i].n.y=16;
+ 115   2      
+ 116   2                      towerxy[i].x=28;
+C51 COMPILER V9.05   GUANGQIASHEJI                                                         06/04/2021 22:16:05 PAGE 3   
+
+ 117   2              }
+ 118   1              HP=3;
+ 119   1              //根据初始化的信息打印静态游戏界面
+ 120   1              second();
+ 121   1              youxixinxi2_0(HP,Dn,jingbi);
+ 122   1              init_T0();//开启T0计时器
+ 123   1      
+ 124   1              yaokon();
+ 125   1      }
+ 126          
+ 127          void disanguan()//第三关的总接口函数
+ 128          {
+ 129   1              uchar i;
+ 130   1      
+ 131   1              //初始化信息
+ 132   1              guangbiaox=3*x_1;
+ 133   1              guangbiaoy=0;
+ 134   1              jingbi=120;
+ 135   1              Dn=0;
+ 136   1              direnshuliang=6;
+ 137   1      
+ 138   1              for(i=0;i<10;i++)
+ 139   1              {
+ 140   2                      D[i].hp=3;
+ 141   2                      D[i].n.x=3*x_1;
+ 142   2                      D[i].n.y=0;
+ 143   2      
+ 144   2                      towerxy[i].x=28;
+ 145   2              }
+ 146   1              HP=3;
+ 147   1      
+ 148   1              //根据初始化的信息打印静态游戏界面
+ 149   1              third();
+ 150   1              youxixinxi2_0(HP,Dn,jingbi);
+ 151   1              init_T0();//开启T0计时器
+ 152   1      
+ 153   1              yaokon();
+ 154   1      
+ 155   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    676    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----       4
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

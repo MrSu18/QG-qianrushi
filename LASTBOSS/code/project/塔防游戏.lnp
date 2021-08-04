@@ -1,0 +1,15 @@
+"STARTUP.obj",
+"LM4229.obj",
+"通用函数.obj",
+"main.obj",
+"digitaltube.obj",
+"Dcommunication_R.obj",
+"gamemain.obj",
+"picture.obj",
+"lcdziku.obj",
+"EEPROM.obj",
+"select.obj",
+"guangqiasheji.obj",
+"Buzzer.obj" 
+TO "塔防游戏" 
+RAMSIZE(256) 

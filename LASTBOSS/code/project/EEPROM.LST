@@ -1,0 +1,187 @@
+C51 COMPILER V9.05   EEPROM                                                                06/04/2021 22:16:05 PAGE 1   
+
+
+C51 COMPILER V9.05, COMPILATION OF MODULE EEPROM
+OBJECT MODULE PLACED IN EEPROM.OBJ
+COMPILER INVOKED BY: L:\单片机\keil\KEIL4\C51\BIN\C51.EXE EEPROM.c BROWSE DEBUG OBJECTEXTEND
+
+line level    source
+
+   1          #include<reg52.h>
+   2          #include"塔防游戏.h"
+   3          
+   4          
+   5          void delay(){;;}
+   6          
+   7          void init_EEPROM()
+   8          {
+   9   1              SCL=1;
+  10   1              delay();
+  11   1              SDA=1;//将总线都拉高以释放总线
+  12   1              delay();
+  13   1      }
+  14          
+  15          void start()
+  16          {
+  17   1              SDA=1;
+  18   1              delay();
+  19   1              SCL=1;
+  20   1              delay();
+  21   1              SDA=0;//在SCL高电平期间，SDA下降沿启动信号
+  22   1              delay();
+  23   1      }
+  24          
+  25          void respons()
+  26          {
+  27   1              uchar i=0;
+  28   1              SCL=1;
+  29   1              delay();
+  30   1              while(SDA==1&&i<255)//若在一段时间内没用收到从机的应答，则主机默认收到
+  31   1                      i++;
+  32   1              SCL=0;
+  33   1              delay();
+  34   1      }
+  35          
+  36          void stop()
+  37          {
+  38   1              SDA=0;
+  39   1              delay();
+  40   1              SCL=1;
+  41   1              delay();
+  42   1              SDA=1;
+  43   1              delay();
+  44   1      }//SCL高电位时候SDA产生一个上升沿表示停止
+  45          
+  46          void writebyte(uchar date)
+  47          {
+  48   1              uchar i,temp;
+  49   1              temp=date;
+  50   1              for(i=0;i<8;i++)
+  51   1              {
+  52   2                      temp=temp<<1;
+  53   2                      SCL=0;
+  54   2                      delay();
+  55   2                      SDA=CY;
+C51 COMPILER V9.05   EEPROM                                                                06/04/2021 22:16:05 PAGE 2   
+
+  56   2                      delay();
+  57   2                      SCL=1;
+  58   2                      delay();
+  59   2              }
+  60   1              SCL=0;
+  61   1              delay();
+  62   1              SDA=1;
+  63   1              delay();
+  64   1      }
+  65          
+  66          uchar readbyte()
+  67          {
+  68   1              uchar i,k;
+  69   1              SCL=0;
+  70   1              delay();
+  71   1              SDA=1;
+  72   1              delay();
+  73   1              for(i=0;i<8;i++)
+  74   1              {
+  75   2                      SCL=1;
+  76   2                      delay();
+  77   2                      k=(k<<1)|SDA;
+  78   2                      SCL=0;
+  79   2                      delay();
+  80   2              }
+  81   1              return k;
+  82   1      }
+  83          
+  84          
+  85          void write_add(uchar address,uchar date)
+  86          {
+  87   1              start();
+  88   1              writebyte(0xa0);
+  89   1              respons();
+  90   1              writebyte(address);
+  91   1              respons();
+  92   1              writebyte(date);
+  93   1              respons();
+  94   1              stop();
+  95   1      }
+  96          
+  97          uchar read_add(uchar address)
+  98          {
+  99   1              uchar date;
+ 100   1              start();
+ 101   1              writebyte(0xa0);//存储器的地址码+0表示写操作
+ 102   1              respons();
+ 103   1              writebyte(address);
+ 104   1              respons();
+ 105   1              start();
+ 106   1              writebyte(0xa1);//读操作
+ 107   1              respons();
+ 108   1              date=readbyte();//读一个字节出来，读完之后位移进入CY
+ 109   1              stop();
+ 110   1              return date;
+ 111   1      }
+ 112          
+ 113          void scorepaixu(uint *p)//对存储数据的数组进行排序，使之有序后再存入EEPROM
+ 114          {
+ 115   1              char i,j;
+ 116   1              int t;
+ 117   1              p[5]=defen;//每次得分都在P[5]的位置,排序之后如果它还在这个位置就说明它是最后的也不存入eeprom
+C51 COMPILER V9.05   EEPROM                                                                06/04/2021 22:16:05 PAGE 3   
+
+ 118   1              for(i=1;i<6;i++)
+ 119   1              {
+ 120   2                      t=p[i];
+ 121   2                      for(j=i-1;j>=0&&p[j]<t;j--)
+ 122   2                      {
+ 123   3                              p[j+1]=p[j];
+ 124   3                      }
+ 125   2                      p[j+1]=t;
+ 126   2              }
+ 127   1      }
+ 128          
+ 129           void Weeprom()//存储数据到EEPROM中
+ 130          {
+ 131   1              char i;
+ 132   1              uchar score1,score2;
+ 133   1              scorepaixu(score);
+ 134   1              for(i=0;i<5;i++)
+ 135   1              {
+ 136   2                      score1=score[i]/100;
+ 137   2                      score2=score[i]-score1*100;
+ 138   2      
+ 139   2                      write_add(i*2+1,score1);
+ 140   2                      delay_ms(5);
+ 141   2                      write_add(i*2+2,score2);
+ 142   2                      delay_ms(5);
+ 143   2              }
+ 144   1              defen=0;//在写入之后把defen清0防止出现一次游戏不断刷分
+ 145   1      }
+ 146          
+ 147          void Reeprom()
+ 148          {
+ 149   1              char i;
+ 150   1              uchar score1,score2;
+ 151   1              for(i=0;i<5;i++)
+ 152   1              {
+ 153   2                      score1=read_add(i*2+1);
+ 154   2                      delay_ms(5);
+ 155   2                      score2=read_add(i*2+2);
+ 156   2                      delay_ms(5);
+ 157   2                      score[i]=score1*100+score2;
+ 158   2              }
+ 159   1      }
+ 160          
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    545    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----      10
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

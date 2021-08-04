@@ -1,0 +1,59 @@
+C51 COMPILER V9.05   MAIN                                                                  06/04/2021 22:16:04 PAGE 1   
+
+
+C51 COMPILER V9.05, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN main.OBJ
+COMPILER INVOKED BY: L:\单片机\keil\KEIL4\C51\BIN\C51.EXE main.c BROWSE DEBUG OBJECTEXTEND
+
+line level    source
+
+   1          #include <reg52.h>
+   2          #include <intrins.h>
+   3          #include "塔防游戏.h"
+   4          
+   5          uchar receive_data;
+   6          
+   7          uchar flag=0;//用来对T0定时器是否中断做一个标记，达到定时2S的作用
+   8          uchar idata flagchoose;
+   9          
+  10          uchar idata direnx;
+  11          uchar idata direny;//敌人的位置xy用定时器中断控制敌人移动
+  12          uchar idata direnhp;
+  13          
+  14          uchar idata direnshuliang; //敌人数量
+  15          
+  16          uchar idata HP;//基地血量
+  17          uint idata jingbi;//金币数量
+  18          uint idata defen=0;//用户的得分
+  19          uchar idata jieshuflag=0;//用来标记游戏是否结束
+  20          
+  21          uchar guangbiaox;
+  22          uchar guangbiaoy;//光标坐标xy
+  23          
+  24          void main()
+  25          {
+  26   1              uchar flagchoose=0;//用来标记箭头位置的
+  27   1      
+  28   1              mainmeun();
+  29   1              choosemenu(0);
+  30   1      
+  31   1              init_R();
+  32   1              init_EEPROM();
+  33   1              Reeprom();//先把数据读出来放到数组里面
+  34   1              meun(flagchoose);
+  35   1              while(1);
+  36   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     27    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      4       1
+   IDATA SIZE       =     11    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
